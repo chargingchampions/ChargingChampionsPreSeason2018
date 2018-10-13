@@ -51,7 +51,7 @@ public class Motor extends Subsystem {
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new org.usfirst.frc.team6560.robot.commands.setSpeed());
+		setDefaultCommand(new org.usfirst.frc.team6560.robot.commands.ControlMotor());
 	}
 
 }

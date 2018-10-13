@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class setSpeed extends Command {
+public class ControlMotor extends Command {
 
-    public setSpeed() {
+    public ControlMotor() {
     	requires(Robot.motor);
     }
 
