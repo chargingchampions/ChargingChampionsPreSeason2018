@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		motor = new Motor();
 		oi = new OI();
+		
 	}
 
 	/**
