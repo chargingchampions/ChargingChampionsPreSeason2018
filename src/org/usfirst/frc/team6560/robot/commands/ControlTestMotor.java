@@ -46,8 +46,8 @@ public class ControlTestMotor extends Command {
         double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
         double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
 
-        Robot.testMotor.setSpeedL(lFactor * radius);
-        Robot.testMotor.setSpeedR(rFactor * radius);
+        Robot.testMotor.setVelL(lFactor * radius);
+        Robot.testMotor.setVelR(rFactor * radius);
     }
 
     // Make this return true when this Command no longer needs to run execute()
