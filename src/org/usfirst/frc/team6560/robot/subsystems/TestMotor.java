@@ -21,9 +21,7 @@ public class TestMotor extends Subsystem {
 	
 	WPI_TalonSRX motorL1;
 	WPI_TalonSRX motorL2;
-	
-	private double speedMultiplier = 0;
-	
+		
 	public TestMotor() {
 		super();
 		
@@ -88,11 +86,11 @@ public class TestMotor extends Subsystem {
 //    }
 
     public void setVelL(double vel) {
-    	motorL1.set(ControlMode.Velocity, vel * speedMultiplier);
+    	motorL1.set(ControlMode.Velocity, vel);
     }
     
     public void setVelR(double vel) {
-    	motorR1.set(ControlMode.Velocity, -vel * speedMultiplier);
+    	motorR1.set(ControlMode.Velocity, -vel);
     }
     
     public double getPositionL() {
@@ -112,11 +110,6 @@ public class TestMotor extends Subsystem {
     	motorL1.set(ControlMode.Velocity, 0);
     	motorR1.set(ControlMode.Velocity, 0);
     }
-    
-    public void setSpeedMultiplier(double speedMul) {
-    	speedMultiplier = speedMul;
-    }
-    
     
 }
 

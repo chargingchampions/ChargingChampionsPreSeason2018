@@ -21,9 +21,7 @@ public class ControlTestMotor extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.testMotor.setSpeedMultiplier(0.5);
-    	
+    protected void execute() {    	
     	double x = Robot.oi.getLeftXAxis();
     	double y = Robot.oi.getLeftYAxis();
     	
