@@ -2,6 +2,7 @@ package org.usfirst.frc.team6560.robot.subsystems;
 
 import org.usfirst.frc.team6560.robot.RobotMap;
 import org.usfirst.frc.team6560.robot.commands.ControlMotor;
+import org.usfirst.frc.team6560.robot.commands.ControlTestMotor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -12,8 +13,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class TestMotor extends Subsystem {
-   
-
 	WPI_TalonSRX motorR1;
 	WPI_TalonSRX motorR2;
 	WPI_TalonSRX motorL1;
@@ -46,6 +45,11 @@ public class TestMotor extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+	@Override
+	public void initDefaultCommand() {
+		setDefaultCommand(new ControlTestMotor());
+	}
+	
 	@Override
 	public void periodic() {
 		super.periodic();
@@ -88,9 +92,6 @@ public class TestMotor extends Subsystem {
     	motorL2.set(ControlMode.PercentOutput, currentSpeedL);
 
 	}
-	
-    public void initDefaultCommand() {
-    }
     
     public void radin(double x, double y){
     	targetSpeedL = -(y+x);
@@ -158,8 +159,6 @@ public class TestMotor extends Subsystem {
 
         targetSpeedL = lFactor * radius;
         targetSpeedR = -rFactor * radius;
-        
-        System.out.println("hello");
     }
     
     public void changeSpeed(double speedGoal) {

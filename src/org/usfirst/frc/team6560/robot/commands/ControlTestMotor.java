@@ -21,8 +21,8 @@ public class ControlTestMotor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.testMotor.onJoystickInput(Robot.m_oi.joystick.getX(), Robot.m_oi.joystick.getY());
-    	Robot.testMotor.changeSpeed(Robot.m_oi.joystick.getThrottle());
+    	Robot.testMotor.onJoystickInput(Robot.oi.getLeftYAxis(), Robot.oi.getRightYAxis());
+    	Robot.testMotor.changeSpeed(0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()
