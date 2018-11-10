@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ControlMotor extends Command {
+public class ControlTestMotor extends Command {
 
-    public ControlMotor() {
+    public ControlTestMotor() {
         requires(Robot.testMotor);
     }
 
