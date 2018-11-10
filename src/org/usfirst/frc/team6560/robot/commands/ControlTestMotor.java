@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ControlTestMotor extends Command {
+	public static final double TURN_SPEED = 0.5;
 
     public ControlTestMotor() {
         requires(Robot.testMotor);
@@ -16,13 +17,37 @@ public class ControlTestMotor extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.testMotor.onJoystickInput(0,0);
+    	Robot.testMotor.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.testMotor.onJoystickInput(Robot.oi.getLeftYAxis(), Robot.oi.getRightYAxis());
-    	Robot.testMotor.changeSpeed(0.5);
+    	Robot.testMotor.setSpeedMultiplier(0.5);
+    	
+    	double x = Robot.oi.getLeftXAxis();
+    	double y = Robot.oi.getLeftYAxis();
+    	
+        double radius = Math.sqrt(x*x + y*y);
+        double t = Math.atan2(y, x);
+
+        if (radius < 0.05) {
+            Robot.testMotor.stop();
+            return;
+        }
+
+        double s = TURN_SPEED / 2;
+
+        double cosSign = Math.copySign(1.0, Math.cos(t));
+        double sinSign = Math.copySign(1.0, Math.sin(t));
+        double tanSign = Math.copySign(1.0, Math.tan(t));
+
+        double funcVal = Math.cos(2*t);
+
+        double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
+        double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
+
+        Robot.testMotor.setSpeedL(lFactor * radius);
+        Robot.testMotor.setSpeedR(rFactor * radius);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -32,11 +57,12 @@ public class ControlTestMotor extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.testMotor.onJoystickInput(0,0);
+    	Robot.testMotor.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

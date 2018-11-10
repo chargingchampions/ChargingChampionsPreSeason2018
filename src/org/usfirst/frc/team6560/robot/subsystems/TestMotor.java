@@ -22,9 +22,7 @@ public class TestMotor extends Subsystem {
 	
 	private static double acceleration = 0.01;
 	private static double deceleration = 0.01;
-	
-	private int speedIndex = 0;
-	
+		
 	private double currentSpeedL = 0.0;
 	private double currentSpeedR = 0.0;
 	
@@ -51,7 +49,7 @@ public class TestMotor extends Subsystem {
 	}
 	
 	@Override
-	public void periodic() {
+	public void periodic() { // TODO remove this and use the Talon SRX's built in speed ramper
 		super.periodic();
 		
 		if(currentSpeedL < targetSpeedL * speedMultiplyer){
@@ -93,76 +91,57 @@ public class TestMotor extends Subsystem {
 
 	}
     
-    public void radin(double x, double y){
-    	targetSpeedL = -(y+x);
-    	targetSpeedR = (y-x);
-    }
+//    public void radin(double x, double y){
+//    	targetSpeedL = -(y+x);
+//    	targetSpeedR = (y-x);
+//    }
+//
+//    public void onJoystickInputAdrin(double x, double y) {
+//    	y= -y;
+//
+//    	if(x>0){
+//    		if(y>0.5){
+//    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/2); 
+//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}else if(y>=-0.5&&y<=0.5){
+//    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/0.86); 
+//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}else if(y<-0.5){
+//    			targetSpeedR = y+((1-Math.pow(Math.E, -2*x))/2); 
+//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}
+//    	}
+//    	
+//    	else if(x<0){
+//    		if(y>0.5){
+//    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/2); 
+//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}else if(y>=-0.5&&y<=0.5){
+//    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/0.86); 
+//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}else if(y<-0.5){
+//    			targetSpeedL = y+((1-Math.pow(Math.E, -2*x))/2); 
+//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
+//    		}
+//    	}
+//    	
+//    }
 
-    public void onJoystickInput(double x, double y) {
-    	onJoystickInputJack(x, y);
-    }
-
-    public void onJoystickInputAdrin(double x, double y) {
-    	y= -y;
-
-    	if(x>0){
-    		if(y>0.5){
-    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/2); 
-    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}else if(y>=-0.5&&y<=0.5){
-    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/0.86); 
-    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}else if(y<-0.5){
-    			targetSpeedR = y+((1-Math.pow(Math.E, -2*x))/2); 
-    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}
-    	}
-    	
-    	else if(x<0){
-    		if(y>0.5){
-    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/2); 
-    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}else if(y>=-0.5&&y<=0.5){
-    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/0.86); 
-    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}else if(y<-0.5){
-    			targetSpeedL = y+((1-Math.pow(Math.E, -2*x))/2); 
-    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-    		}
-    	}
-    	
-    }
-
-    public static final double turnSpeed = 0.5;
-
-    public void onJoystickInputJack(double x, double y) {
-    	y = -y;
-        double radius = Math.sqrt(x*x + y*y);
-        double t = Math.atan2(y, x);
-
-        if (radius < 0.05) {
-            targetSpeedL = 0;
-            targetSpeedR = 0;
-            return;
-        }
-
-        double s = turnSpeed / 2;
-
-        double cosSign = Math.copySign(1.0, Math.cos(t));
-        double sinSign = Math.copySign(1.0, Math.sin(t));
-        double tanSign = Math.copySign(1.0, Math.tan(t));
-
-        double funcVal = Math.cos(2*t);
-
-        double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
-        double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
-
-        targetSpeedL = lFactor * radius;
-        targetSpeedR = -rFactor * radius;
+    public void setSpeedL(double speed) {
+    	targetSpeedL = speed;
     }
     
-    public void changeSpeed(double speedGoal) {
-    	speedMultiplyer = (speedGoal-1)/(2);
+    public void setSpeedR(double speed) {
+    	targetSpeedR = -speed;
+    }
+    
+    public void stop() {
+    	targetSpeedL = 0;
+    	targetSpeedR = 0;
+    }
+    
+    public void setSpeedMultiplier(double speedMul) {
+    	speedMultiplyer = speedMul;
     	
     }
     
