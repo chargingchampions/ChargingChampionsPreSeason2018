@@ -8,6 +8,14 @@ package org.usfirst.frc.team6560.robot;
  */
 public class RobotMap {
 
+    // These are temporarily here for the TestMotor
+    public static final int R1_ID = 0;
+    public static final int R2_ID = 1;
+
+    public static final int L1_ID = 2;
+    public static final int L2_ID = 3;
+
+
 	public static class CAN {
 		public static final int DRIVE_FRONTLEFT = 9;
 		public static final int DRIVE_REARLEFT = 10;
