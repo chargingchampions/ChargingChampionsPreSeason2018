@@ -24,8 +24,8 @@ public class AutoForwardTestMotor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double errorL = Math.max(0, Robot.testMotor.getPositionL() - Robot.testMotor.getPositionR());
-    	double errorR = Math.max(0, Robot.testMotor.getPositionR() - Robot.testMotor.getPositionL());
+    	double errorL = Math.max(0, Robot.testMotor.getPositionL() - Robot.testMotor.getPositionR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
+    	double errorR = Math.max(0, Robot.testMotor.getPositionR() - Robot.testMotor.getPositionL()); // errorR is how many units the right wheel is ahead of the left wheel; errorR is 0 if it is not ahead
     	
     	Robot.testMotor.setVelL(Math.max(SPEED / 2, SPEED - errorL / 10));
     	Robot.testMotor.setVelR(Math.max(SPEED / 2, SPEED - errorR / 10));
