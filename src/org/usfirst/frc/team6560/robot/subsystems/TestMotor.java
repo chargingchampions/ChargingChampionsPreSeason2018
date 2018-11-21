@@ -1,7 +1,6 @@
 package org.usfirst.frc.team6560.robot.subsystems;
 
 import org.usfirst.frc.team6560.robot.RobotMap;
-import org.usfirst.frc.team6560.robot.commands.ControlMotor;
 import org.usfirst.frc.team6560.robot.commands.ControlTestMotor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -85,12 +84,19 @@ public class TestMotor extends Subsystem {
 //    	
 //    }
 
+	public void updateMotorControllers() {
+    	motorL1.set(ControlMode.Velocity, velL * velMultiplier);
+    	motorR1.set(ControlMode.Velocity, -velR * velMultiplier);
+	}
+
     public void setVelL(double vel) {
-    	motorL1.set(ControlMode.Velocity, vel);
+    	velL = vel;
+    	updateMotorControllers();
     }
     
     public void setVelR(double vel) {
-    	motorR1.set(ControlMode.Velocity, -vel);
+    	velR = vel;
+    	updateMotorControllers();
     }
     
     public double getPositionL() {
@@ -107,9 +113,21 @@ public class TestMotor extends Subsystem {
     }
     
     public void stop() {
-    	motorL1.set(ControlMode.Velocity, 0);
-    	motorR1.set(ControlMode.Velocity, 0);
+    	velL = 0.0;
+    	velR = 0.0;
+    	
+    	updateMotorControllers();
     }
+
+	public void setVelMultiplier(double multiplier) {
+		
+		velMultiplier = multiplier;
+		updateMotorControllers();
+	}
+	
+	private double velL = 0.0;
+	private double velR = 0.0;
+	private double velMultiplier = 0.5;
     
 }
 

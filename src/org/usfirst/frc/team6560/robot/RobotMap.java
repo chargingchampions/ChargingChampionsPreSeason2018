@@ -41,8 +41,7 @@ public class RobotMap {
 	}
 
 	public static class Joysticks {
-		public static final int GAMEPAD = 0;
-		public static final int LOGITECH_JOYSTICK_ID = 1;
+		public static final int LOGITECH_JOYSTICK_ID = 0;
 
 		// Gamepad buttons
 		public static final int A_BUTTON = 1;

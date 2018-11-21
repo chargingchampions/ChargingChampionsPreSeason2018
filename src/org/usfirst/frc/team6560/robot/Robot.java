@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import org.usfirst.frc.team6560.robot.subsystems.Motor;
 import org.usfirst.frc.team6560.robot.subsystems.TestMotor;
 
 /**
@@ -23,7 +22,6 @@ import org.usfirst.frc.team6560.robot.subsystems.TestMotor;
  */
 public class Robot extends TimedRobot {
 	public static OI oi;
-	public static Motor motor;
 	public static TestMotor testMotor;
 
 	Command m_autonomousCommand;
@@ -35,7 +33,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		motor = new Motor();
+		testMotor = new TestMotor();
 		oi = new OI();
 		
 	}
@@ -81,6 +79,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
+	
 	}
 
 	/**

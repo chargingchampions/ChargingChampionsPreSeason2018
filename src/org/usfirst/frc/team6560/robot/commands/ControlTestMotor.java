@@ -22,8 +22,10 @@ public class ControlTestMotor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double x = Robot.oi.getLeftXAxis();
-    	double y = Robot.oi.getLeftYAxis();
+    	double x = Robot.oi.logitechJoystick.getX();
+    	double y = Robot.oi.logitechJoystick.getY();
+    	
+    	Robot.testMotor.setVelMultiplier(Robot.oi.logitechJoystick.getThrottle());
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
@@ -43,7 +45,7 @@ public class ControlTestMotor extends Command {
 
         double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
         double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
-
+        
         Robot.testMotor.setVelL(lFactor * radius);
         Robot.testMotor.setVelR(rFactor * radius);
     }
