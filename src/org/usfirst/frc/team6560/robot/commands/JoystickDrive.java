@@ -26,7 +26,7 @@ public class JoystickDrive extends Command {
     	double x = Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
-    	Robot.driveTrain.setVelMultiplier(-Robot.oi.logitechJoystick.getThrottle());
+    	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle());
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
@@ -47,8 +47,8 @@ public class JoystickDrive extends Command {
         double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
         double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
         
-        Robot.driveTrain.setVelL(lFactor * radius);
-        Robot.driveTrain.setVelR(rFactor * radius);
+        Robot.driveTrain.setVelL(lFactor * radius * multiplier);
+        Robot.driveTrain.setVelR(rFactor * radius * multiplier);
     }
 
     // Make this return true when this Command no longer needs to run execute()

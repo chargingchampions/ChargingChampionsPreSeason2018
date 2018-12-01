@@ -39,7 +39,7 @@ public class OI {
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
 
-		secondButton12.whenPressed(new AutoStraightDistance(5));
+		secondButton12.whenPressed(new AutoStraightDistance(10));
 
 		// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));

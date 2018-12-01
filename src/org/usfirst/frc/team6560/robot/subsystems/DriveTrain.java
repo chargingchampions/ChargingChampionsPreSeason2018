@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
-	private static final double RAMP_TIME = 2.0;
+	public static final double RAMP_TIME = 2.0;
 
 	WPI_TalonSRX motorR1;
 	WPI_TalonSRX motorR2;
@@ -23,7 +23,6 @@ public class DriveTrain extends Subsystem {
 	
 	private double velL = 0.0;
 	private double velR = 0.0;
-	private double velMultiplier = 0.5;
 		
 	public DriveTrain() {
 		super();
@@ -92,13 +91,11 @@ public class DriveTrain extends Subsystem {
 //    }
 
 	public void updateMotorControllers() {
-		double scaledVelL = velL * velMultiplier;
-		double scaledVelR = velR * velMultiplier;
-		System.out.println("Setting 'left, right' side drive to: " + scaledVelL + ", " + scaledVelR);
+		System.out.println("Setting 'left, right' side drive to: " + velL + ", " + velR);
     	//passing the ControlMode.Velocity parameter seems to be causing issues
 		//temporary fix is to remove it: motorL1.set(scaledVelL);
-		motorL1.set(ControlMode.Velocity, scaledVelL);
-    	motorR1.set(ControlMode.Velocity, scaledVelR);
+		motorL1.set(ControlMode.Velocity, velL);
+    	motorR1.set(ControlMode.Velocity, velR);
 	}
 
     public void setVelL(double vel) {
@@ -119,6 +116,7 @@ public class DriveTrain extends Subsystem {
     	return motorR1.getSelectedSensorPosition(0);
     }
     
+    
     public void resetPositions() {
     	motorL1.setSelectedSensorPosition(0, 0, 0); // TODO see if third argument is necessary
     	motorR1.setSelectedSensorPosition(0, 0, 0);
@@ -131,20 +129,11 @@ public class DriveTrain extends Subsystem {
     	updateMotorControllers();
     }
 
-	public void setVelMultiplier(double multiplier) {
-		
-		velMultiplier = multiplier;
-		updateMotorControllers();
-	}
-
-	public double getVelMultiplier() {
-		return velMultiplier;
-	}
 	public double getVelL() {
-		return velL;
+		return motorL1.getSelectedSensorVelocity(0);
 	}
 	public double getVelR() {
-		return velR;
+		return motorR1.getSelectedSensorVelocity(0);
 	}
 	
 	

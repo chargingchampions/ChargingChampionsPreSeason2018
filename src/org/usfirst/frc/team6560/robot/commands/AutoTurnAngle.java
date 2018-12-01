@@ -33,8 +33,8 @@ public class AutoTurnAngle extends Command {
     	double errorL = Math.max(0, Math.abs(Robot.driveTrain.getPositionL()) - Math.abs(Robot.driveTrain.getPositionR())); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
     	double errorR = Math.max(0, Math.abs(Robot.driveTrain.getPositionR()) - Math.abs(Robot.driveTrain.getPositionL())); // errorR is how many units the right wheel is ahead of the left wheel; errorR is 0 if it is not ahead
     	
-    	Robot.driveTrain.setVelL(Math.max(SPEED / 2, SPEED - errorL / 10) * direction);
-    	Robot.driveTrain.setVelR(Math.max(SPEED / 2, SPEED - errorR / 10) * -direction);
+    	Robot.driveTrain.setVelL(Math.max(SPEED * 0.9, SPEED - errorL / 10) * direction);
+    	Robot.driveTrain.setVelR(Math.max(SPEED * 0.9, SPEED - errorR / 10) * -direction);
     }
 
     // Make this return true when this Command no longer needs to run execute()
