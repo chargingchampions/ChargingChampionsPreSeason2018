@@ -97,6 +97,13 @@ public class DriveTrain extends Subsystem {
 		motorL1.set(ControlMode.Velocity, velL);
     	motorR1.set(ControlMode.Velocity, velR);
 	}
+	
+	public void setDirectOutputL(double output) {
+		motorL1.set(ControlMode.PercentOutput, output);
+	}
+	public void setDirectOutputR(double output) {
+		motorR1.set(ControlMode.PercentOutput, output);
+	}
 
     public void setVelL(double vel) {
     	velL = vel;
