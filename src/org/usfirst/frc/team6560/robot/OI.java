@@ -15,7 +15,6 @@ public class OI {
 
 	public OI() {
 		logitechJoystick = new Joystick(Joysticks.LOGITECH_JOYSTICK_ID);
-		
 //		JoystickButton aButton = new JoystickButton(gamepad, Joysticks.A_BUTTON);
 //		JoystickButton bButton = new JoystickButton(gamepad, Joysticks.B_BUTTON);
 //		JoystickButton xButton = new JoystickButton(gamepad, Joysticks.X_BUTTON);
@@ -40,6 +39,8 @@ public class OI {
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
 
+		secondButton12.whenPressed(new AutoStraightDistance(5));
+
 		// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
 
@@ -57,7 +58,6 @@ public class OI {
 		secondButton12.whileHeld(new RotateSecondClimberOut());
 		**/
 		
-		secondButton12.whenPressed(new AutoStraightDistance(5, 0.01));
 		
 		//hold to go to safety
 		//secondButton3.whenPressed(new RotateGrabberInSafety());
