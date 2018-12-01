@@ -8,16 +8,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ControlTestMotor extends Command {
+public class JoystickDrive extends Command {
 	public static final double TURN_SPEED = 0.5;
 
-    public ControlTestMotor() {
-        requires(Robot.testMotor);
+    public JoystickDrive() {
+        requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.testMotor.stop();
+    	System.out.println("Running JoystickDrive command...");
+    	Robot.driveTrain.stop();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,13 +26,13 @@ public class ControlTestMotor extends Command {
     	double x = Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
-    	Robot.testMotor.setVelMultiplier(Robot.oi.logitechJoystick.getThrottle());
+    	Robot.driveTrain.setVelMultiplier(-Robot.oi.logitechJoystick.getThrottle());
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
 
         if (radius < 0.05) {
-            Robot.testMotor.stop();
+            Robot.driveTrain.stop();
             return;
         }
 
@@ -46,8 +47,8 @@ public class ControlTestMotor extends Command {
         double lFactor = -cosSign * (s + tanSign * 0.5) * funcVal - cosSign * s + sinSign * 0.5;
         double rFactor = cosSign * (s - tanSign * 0.5) * funcVal + cosSign * s + sinSign * 0.5;
         
-        Robot.testMotor.setVelL(lFactor * radius);
-        Robot.testMotor.setVelR(rFactor * radius);
+        Robot.driveTrain.setVelL(lFactor * radius);
+        Robot.driveTrain.setVelR(rFactor * radius);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -57,7 +58,7 @@ public class ControlTestMotor extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.testMotor.stop();
+    	Robot.driveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same

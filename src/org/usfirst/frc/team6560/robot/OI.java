@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
+import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -56,6 +57,7 @@ public class OI {
 		secondButton12.whileHeld(new RotateSecondClimberOut());
 		**/
 		
+		secondButton12.whenPressed(new AutoStraightDistance(5, 0.01));
 		
 		//hold to go to safety
 		//secondButton3.whenPressed(new RotateGrabberInSafety());

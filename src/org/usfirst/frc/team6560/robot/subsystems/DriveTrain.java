@@ -1,7 +1,7 @@
 package org.usfirst.frc.team6560.robot.subsystems;
 
 import org.usfirst.frc.team6560.robot.RobotMap;
-import org.usfirst.frc.team6560.robot.commands.ControlTestMotor;
+import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class TestMotor extends Subsystem {
+public class DriveTrain extends Subsystem {
 	private static final double RAMP_TIME = 2.0;
 
 	WPI_TalonSRX motorR1;
@@ -20,8 +20,12 @@ public class TestMotor extends Subsystem {
 	
 	WPI_TalonSRX motorL1;
 	WPI_TalonSRX motorL2;
+	
+	private double velL = 0.0;
+	private double velR = 0.0;
+	private double velMultiplier = 0.5;
 		
-	public TestMotor() {
+	public DriveTrain() {
 		super();
 		
 		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
@@ -29,6 +33,9 @@ public class TestMotor extends Subsystem {
 
 	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
 	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
+	    
+	    motorL1.setInverted(true);
+	    motorL2.setInverted(true);
 	    
 	    motorR2.follow(motorR1);
 	    motorL2.follow(motorL1);
@@ -45,7 +52,7 @@ public class TestMotor extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new ControlTestMotor());
+		setDefaultCommand(new JoystickDrive());
 	}
     
 //    public void radin(double x, double y){
@@ -85,8 +92,13 @@ public class TestMotor extends Subsystem {
 //    }
 
 	public void updateMotorControllers() {
-    	motorL1.set(ControlMode.Velocity, velL * velMultiplier);
-    	motorR1.set(ControlMode.Velocity, -velR * velMultiplier);
+		double scaledVelL = velL * velMultiplier;
+		double scaledVelR = velR * velMultiplier;
+		System.out.println("Setting 'left, right' side drive to: " + scaledVelL + ", " + scaledVelR);
+    	//passing the ControlMode.Velocity parameter seems to be causing issues
+		//temporary fix is to remove it: motorL1.set(scaledVelL);
+		motorL1.set(ControlMode.Velocity, scaledVelL);
+    	motorR1.set(ControlMode.Velocity, scaledVelR);
 	}
 
     public void setVelL(double vel) {
@@ -124,10 +136,18 @@ public class TestMotor extends Subsystem {
 		velMultiplier = multiplier;
 		updateMotorControllers();
 	}
+
+	public double getVelMultiplier() {
+		return velMultiplier;
+	}
+	public double getVelL() {
+		return velL;
+	}
+	public double getVelR() {
+		return velR;
+	}
 	
-	private double velL = 0.0;
-	private double velR = 0.0;
-	private double velMultiplier = 0.5;
+	
     
 }
 
