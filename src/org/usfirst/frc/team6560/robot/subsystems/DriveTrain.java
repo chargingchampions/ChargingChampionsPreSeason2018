@@ -33,14 +33,23 @@ public class DriveTrain extends Subsystem {
 	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
 	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
 	    
-	    motorL1.setInverted(true);
-	    motorL2.setInverted(true);
+	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+
+	    
+	    motorR1.config_kF(0, 0.304723404);
+	    motorL1.config_kF(0, 0.3086637931);
+
+	    motorL1.setSensorPhase(true);
+	    
+	    motorR1.setInverted(true);
+	    motorR2.setInverted(true);
+	    
+	    motorR1.setSensorPhase(true);
 	    
 	    motorR2.follow(motorR1);
 	    motorL2.follow(motorL1);
 	    
-	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 	    
 	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
 	    motorR1.configClosedloopRamp(RAMP_TIME, 30);

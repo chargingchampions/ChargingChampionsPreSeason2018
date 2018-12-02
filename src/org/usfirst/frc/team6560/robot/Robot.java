@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
+import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 
 /**
@@ -100,6 +102,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+				
+		//Scheduler.getInstance().add(new AutoStraightDistance(10));
 	}
 
 	/**
@@ -108,6 +112,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("L pos: " + driveTrain.getPositionL());
+		System.out.println("R pos: " + driveTrain.getPositionR());
 	}
 
 	/**

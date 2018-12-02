@@ -26,7 +26,7 @@ public class JoystickDrive extends Command {
     	double x = Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
-    	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle());
+    	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle() * 2000);
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
