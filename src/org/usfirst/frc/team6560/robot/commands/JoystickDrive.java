@@ -13,6 +13,7 @@ public class JoystickDrive extends Command {
 
     public JoystickDrive() {
         requires(Robot.driveTrain);
+        setInterruptible(true);
     }
 
     // Called just before this Command runs the first time
@@ -23,10 +24,12 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
+    	System.out.println("Hello");
     	double x = Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
     	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle() * 2000);
+    	multiplier = 1000.0;
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
