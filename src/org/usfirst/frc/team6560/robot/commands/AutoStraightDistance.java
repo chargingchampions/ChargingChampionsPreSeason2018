@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoStraightDistance extends Command {
 	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
-	public static final double SPEED = 1000.0;
+	public static final double SPEED = 400.0;
 	
 	private final double distance;
 	private final double direction;
@@ -38,7 +38,7 @@ public class AutoStraightDistance extends Command {
     	if (getDistanceTraveledAvg() < slowDistance) {
     		drive(1.0); // drive at SPEED
     	} else {
-    		drive(0.2); // drive at 0.2 * SPEED
+    		drive(0.5); // drive at 0.2 * SPEED
     	}
     }
     
@@ -65,8 +65,8 @@ public class AutoStraightDistance extends Command {
 
 		double motorSpeed = speedMultiplier * SPEED;
 		
-    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL) * direction);
-    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR) * direction);
+    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * UNITS_PER_FOOT * 2) * direction);
+    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * UNITS_PER_FOOT * 2) * direction);
     }
      
     private double getEncoderPositionL() {

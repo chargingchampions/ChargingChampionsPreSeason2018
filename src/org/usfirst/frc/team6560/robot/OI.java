@@ -2,6 +2,8 @@ package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
+import org.usfirst.frc.team6560.robot.commands.AutoStraightForever;
+import org.usfirst.frc.team6560.robot.commands.AutoTurnAngle;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -13,7 +15,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public final Joystick logitechJoystick;
-
+	
 	public OI() {
 		logitechJoystick = new Joystick(Joysticks.LOGITECH_JOYSTICK_ID);
 //		JoystickButton aButton = new JoystickButton(gamepad, Joysticks.A_BUTTON);
@@ -39,11 +41,13 @@ public class OI {
 		JoystickButton secondButton10 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_10);
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
-
-		secondButton11.whenPressed(new JoystickDrive());
+		
+		secondButton10.whenPressed(new JoystickDrive());
+		secondButton7.whenPressed(new AutoTurnAngle(10));
 		secondButton12.whenPressed(new AutoStraightDistance(10));
+		secondButton11.whenPressed(new AutoStraightDistance(-10));
 
-		// drive buttons
+				// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
 
 		// PID buttons

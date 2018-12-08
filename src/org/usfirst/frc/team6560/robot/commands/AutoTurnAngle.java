@@ -1,54 +1,97 @@
 package org.usfirst.frc.team6560.robot.commands;
 
 import org.usfirst.frc.team6560.robot.Robot;
+import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
+
 public class AutoTurnAngle extends Command {
-	private static final double UNITS_PER_FULL_TURN = 8000.0; // the number of encoder units each motor should go (in opposite directions) to complete a full turn
-	private static final double DEGREES_PER_FULL_TURN = 360.0;
+	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
+	public static final double SPEED = 400.0;
 	
-	public static final double SPEED = 200.0;
+	private final double distance;
+	private final double direction;
 	
-    private double angle;
-	private double direction;
+	private final double slowDistance;
 	
-    public AutoTurnAngle(double angle) {
+	private double startPositionL;
+	private double startPositionR;
+		
+    public AutoTurnAngle(double distance) {
        requires(Robot.driveTrain);
         
-       this.angle = angle;
-       this.direction = (angle >= 0.0) ? 1.0 : -1.0;
+       this.direction = (distance >= 0.0) ? 1.0 : -1.0;
+       
+       this.distance = Math.abs(distance);
+       this.slowDistance = this.distance - 3.0;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.resetPositions();
+    	startPositionL = getEncoderPositionL();
+    	startPositionR = getEncoderPositionR();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double errorL = Math.max(0, Math.abs(Robot.driveTrain.getPositionL()) - Math.abs(Robot.driveTrain.getPositionR())); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
-    	double errorR = Math.max(0, Math.abs(Robot.driveTrain.getPositionR()) - Math.abs(Robot.driveTrain.getPositionL())); // errorR is how many units the right wheel is ahead of the left wheel; errorR is 0 if it is not ahead
-    	
-    	Robot.driveTrain.setVelL(Math.max(SPEED * 0.9, SPEED - errorL / 10) * direction);
-    	Robot.driveTrain.setVelR(Math.max(SPEED * 0.9, SPEED - errorR / 10) * -direction);
+    	if (getDistanceTraveledAvg() < slowDistance) {
+    		drive(1.0); // drive at SPEED
+    	} else {
+    		drive(0.5); // drive at 0.2 * SPEED
+    	}
     }
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Robot.driveTrain.getPositionL()) / UNITS_PER_FULL_TURN >= Math.abs(angle) / DEGREES_PER_FULL_TURN && Math.abs(Robot.driveTrain.getPositionR()) / UNITS_PER_FULL_TURN >= Math.abs(angle) / DEGREES_PER_FULL_TURN;
+    	return getDistanceTraveledAvg() >= distance;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
+    
+    private void drive(double speedMultiplier) {
+    	double errorL = Math.max(0, getDistanceTraveledL() - getDistanceTraveledR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
+		double errorR = Math.max(0, getDistanceTraveledR() - getDistanceTraveledL()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
+
+		double motorSpeed = speedMultiplier * SPEED;
+		
+    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * UNITS_PER_FOOT) * direction);
+    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * UNITS_PER_FOOT) * -direction);
+    }
+     
+    private double getEncoderPositionL() {
+    	return Robot.driveTrain.getPositionL() /  UNITS_PER_FOOT;
+    }
+    
+    private double getEncoderPositionR() {
+    	return Robot.driveTrain.getPositionR() /  UNITS_PER_FOOT;
+    }
+    
+    private double getDistanceTraveledAvg()
+    {
+    	return (getDistanceTraveledL() + getDistanceTraveledR()) / 2.0;
+    }
+    
+    private double getDistanceTraveledL()
+    {
+    	return Math.abs(getEncoderPositionL() - startPositionL);
+    }
+    
+    private double getDistanceTraveledR()
+    {
+    	return Math.abs(getEncoderPositionR() - startPositionR);
+    }
+    
+
     
 }

@@ -25,7 +25,7 @@ public class JoystickDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
     	System.out.println("Hello");
-    	double x = Robot.oi.logitechJoystick.getX();
+    	double x = -Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
     	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle() * 2000);
