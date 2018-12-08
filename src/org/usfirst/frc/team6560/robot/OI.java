@@ -44,6 +44,7 @@ public class OI {
 		
 		secondButton10.whenPressed(new JoystickDrive());
 		secondButton7.whenPressed(new AutoTurnAngle(10));
+		secondButton8.whenPressed(new AutoStraightForever());
 		secondButton12.whenPressed(new AutoStraightDistance(10));
 		secondButton11.whenPressed(new AutoStraightDistance(-10));
 

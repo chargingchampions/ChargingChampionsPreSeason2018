@@ -30,12 +30,17 @@ public class AutoStraightForever extends Command {
     }
     
     private void setValues() {
-    	
     	Robot.driveTrain.motorL1.config_kF(0, kF);
     	Robot.driveTrain.motorR1.config_kF(0, kF);
     	
+    	Robot.driveTrain.motorL1.config_kP(0, 0);
+    	Robot.driveTrain.motorR1.config_kP(0, 0);
+    	
     	Robot.driveTrain.motorL1.config_kI(0, kI);
     	Robot.driveTrain.motorR1.config_kI(0, kI);
+    	
+    	Robot.driveTrain.motorL1.config_kD(0, 0);
+    	Robot.driveTrain.motorR1.config_kD(0, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -50,7 +55,7 @@ public class AutoStraightForever extends Command {
         	}
         	
     		else if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_BUTTON_3)) {
-        		kI += 0.00001 * Robot.oi.logitechJoystick.getY();
+        		kI += 0.000001 * Robot.oi.logitechJoystick.getY();
         		setValues();
         	}
         	else {
@@ -58,9 +63,14 @@ public class AutoStraightForever extends Command {
         	}
     	}
 
+    	if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_BUTTON_4)) {
+    		Robot.driveTrain.setVelL(0);
+        	Robot.driveTrain.setVelR(0);
+    	} else {
+    		Robot.driveTrain.setVelL(speed);
+        	Robot.driveTrain.setVelR(speed);
+    	}
     	
-    	Robot.driveTrain.setVelL(speed);
-    	Robot.driveTrain.setVelR(speed);
 
     }
 

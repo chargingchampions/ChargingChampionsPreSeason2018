@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
-	public static final double RAMP_TIME = 0.5;
+	public static final double RAMP_TIME = 0;
 
 	public WPI_TalonSRX motorR1;
 	WPI_TalonSRX motorR2;
@@ -37,11 +37,14 @@ public class DriveTrain extends Subsystem {
 	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
 	    
-	    motorL1.config_kF(0, 0.3233179748);
-	    motorR1.config_kF(0, 0.3233179748);
+	    motorL1.config_kF(0, 0);
+	    motorR1.config_kF(0, 0);
+	    
+	    //motorL1.config_kP(0, 0.3233179748);
+	    //motorR1.config_kP(0, 1);
 	   
-	    motorL1.config_kD(0, 6E-4);
-	    motorR1.config_kD(0, 6E-4);
+	    motorL1.config_kD(0, 0);
+	    motorR1.config_kD(0, 0);
 	    
 	    motorR1.config_kI(0, 2E-4);
 	    motorL1.config_kI(0, 2E-4);
