@@ -7,30 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 public class AutoStraightDistance extends Command {
-	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
-	public static final double SPEED = 400.0;
 	
+	private static final double correctionFactor = 2;
 	private final double distance;
 	private final double direction;
+	private final double speed;
 	
 	private final double slowDistance;
 	
 	private double startPositionL;
 	private double startPositionR;
 		
-    public AutoStraightDistance(double distance) {
+    /**
+     * 
+     * @param distance in ft
+     * @param time in seconds
+     */
+	public AutoStraightDistance(double distance, double time) {
        requires(Robot.driveTrain);
         
        this.direction = (distance >= 0.0) ? 1.0 : -1.0;
        
        this.distance = Math.abs(distance);
-       this.slowDistance = this.distance - 3.0;
+       this.slowDistance = this.distance - 1.5;
+       this.speed = this.distance/time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startPositionL = getEncoderPositionL();
-    	startPositionR = getEncoderPositionR();
+    	startPositionL = Robot.driveTrain.getEncoderPositionL();
+    	startPositionR = Robot.driveTrain.getEncoderPositionR();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -63,18 +69,10 @@ public class AutoStraightDistance extends Command {
     	double errorL = Math.max(0, getDistanceTraveledL() - getDistanceTraveledR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		double errorR = Math.max(0, getDistanceTraveledR() - getDistanceTraveledL()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 
-		double motorSpeed = speedMultiplier * SPEED;
+		double motorSpeed = speedMultiplier * speed;
 		
-    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * UNITS_PER_FOOT * 2) * direction);
-    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * UNITS_PER_FOOT * 2) * direction);
-    }
-     
-    private double getEncoderPositionL() {
-    	return Robot.driveTrain.getPositionL() /  UNITS_PER_FOOT;
-    }
-    
-    private double getEncoderPositionR() {
-    	return Robot.driveTrain.getPositionR() /  UNITS_PER_FOOT;
+    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * correctionFactor) * direction);
+    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * correctionFactor) * direction);
     }
     
     private double getDistanceTraveledAvg()
@@ -84,12 +82,12 @@ public class AutoStraightDistance extends Command {
     
     private double getDistanceTraveledL()
     {
-    	return Math.abs(getEncoderPositionL() - startPositionL);
+    	return Math.abs(Robot.driveTrain.getEncoderPositionL() - startPositionL);
     }
     
     private double getDistanceTraveledR()
     {
-    	return Math.abs(getEncoderPositionR() - startPositionR);
+    	return Math.abs(Robot.driveTrain.getEncoderPositionR() - startPositionR);
     }
     
 

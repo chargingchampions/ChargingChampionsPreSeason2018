@@ -3,7 +3,7 @@ package org.usfirst.frc.team6560.robot;
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightForever;
-import org.usfirst.frc.team6560.robot.commands.AutoTurnAngle;
+import org.usfirst.frc.team6560.robot.commands.AutoTurnAngleWithEncoders;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,9 +43,9 @@ public class OI {
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
 		
 		secondButton10.whenPressed(new JoystickDrive());
-		secondButton7.whenPressed(new AutoTurnAngle(10));
-		secondButton12.whenPressed(new AutoStraightDistance(10));
-		secondButton11.whenPressed(new AutoStraightDistance(-10));
+		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(10, 1));
+		secondButton12.whenPressed(new AutoStraightDistance(10, 4));
+		secondButton11.whenPressed(new AutoStraightDistance(-10, 4));
 
 				// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
