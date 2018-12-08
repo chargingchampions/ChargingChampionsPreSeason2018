@@ -42,6 +42,23 @@ public class AutoStraightDistance extends Command {
     	}
     }
     
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	return getDistanceTraveledAvg() >= distance;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    	Robot.driveTrain.stop();
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	end();
+    }
+    
     private void drive(double speedMultiplier) {
     	double errorL = Math.max(0, getDistanceTraveledL() - getDistanceTraveledR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		double errorR = Math.max(0, getDistanceTraveledR() - getDistanceTraveledL()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
@@ -76,20 +93,5 @@ public class AutoStraightDistance extends Command {
     }
     
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	return getDistanceTraveledAvg() >= distance;
-    }
-
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.driveTrain.stop();
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
     
 }
