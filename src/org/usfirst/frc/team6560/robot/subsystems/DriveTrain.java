@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveTrain extends Subsystem {
+	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
 	public static final double RAMP_TIME = 0.5;
 
 	public WPI_TalonSRX motorR1;
@@ -107,9 +108,6 @@ public class DriveTrain extends Subsystem {
 //    }
 
 	public void updateMotorControllers() {
-		System.out.println("Setting 'left, right' side drive to: " + velL + ", " + velR);
-    	//passing the ControlMode.Velocity parameter seems to be causing issues
-		//temporary fix is to remove it: motorL1.set(scaledVelL);
 		motorL1.set(ControlMode.Velocity, velL);
     	motorR1.set(ControlMode.Velocity, velR);
 	}
@@ -121,22 +119,38 @@ public class DriveTrain extends Subsystem {
 		motorR1.set(ControlMode.PercentOutput, output);
 	}
 
+	/**
+	 * 
+	 * @param vel in ft/s
+	 */
     public void setVelL(double vel) {
-    	velL = vel;
+    	velL = vel*UNITS_PER_FOOT/10;
     	updateMotorControllers();
     }
     
+    /**
+     * 
+     * @param vel in ft/s
+     */
     public void setVelR(double vel) {
-    	velR = vel;
+    	velR = vel*UNITS_PER_FOOT/10;
     	updateMotorControllers();
     }
     
-    public double getPositionL() {
-    	return motorL1.getSelectedSensorPosition(0);
+    /**
+     * 
+     * @return encoder distance in feet
+     */
+    public double getEncoderPositionL() {
+    	return motorL1.getSelectedSensorPosition(0) /  UNITS_PER_FOOT;
     }
     
-    public double getPositionR() {
-    	return motorR1.getSelectedSensorPosition(0);
+    /**
+     * 
+     * @return encoder distance in feet
+     */
+    public double getEncoderPositionR() {
+    	return motorR1.getSelectedSensorPosition(0) /  UNITS_PER_FOOT;
     }
     
     
@@ -152,11 +166,20 @@ public class DriveTrain extends Subsystem {
     	updateMotorControllers();
     }
 
+    /**
+     * 
+     * @return vel in ft/s
+     */
 	public double getVelL() {
-		return motorL1.getSelectedSensorVelocity(0);
+		return motorL1.getSelectedSensorVelocity(0) * 10 / UNITS_PER_FOOT;
 	}
+	
+	/**
+	 * 
+	 * @return vel in ft/s
+	 */
 	public double getVelR() {
-		return motorR1.getSelectedSensorVelocity(0);
+		return motorR1.getSelectedSensorVelocity(0) * 10 / UNITS_PER_FOOT;
 	}
 	
 	
