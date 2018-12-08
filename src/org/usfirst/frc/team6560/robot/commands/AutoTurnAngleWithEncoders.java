@@ -8,14 +8,16 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoTurnAngleWithEncoders extends Command {
 	
-	private final double angle;
-	private final double direction;
+	private static final double correctionFactor = 2;
+	private static final double radius = 1.2;
+	private final double distance;
+	private final double directionR;
+	private final double speed;
 	
-	private final double slowAngle;
+	private final double slowDistance;
 	
 	private double startPositionL;
 	private double startPositionR;
-	private double speed;
 		
     /**
      * 
@@ -25,11 +27,11 @@ public class AutoTurnAngleWithEncoders extends Command {
 	public AutoTurnAngleWithEncoders(double angle, double time) {
        requires(Robot.driveTrain);
         
-       this.direction = (angle >= 0.0) ? 1.0 : -1.0;
+       this.directionR = (angle >= 0.0) ? 1.0 : -1.0;
        
-       this.angle = Math.abs(angle);
-       this.slowAngle = this.angle - 10.0;
-       this.speed = this.angle/time;
+       this.distance = Math.abs((angle/360)*2*Math.PI*radius);
+       this.slowDistance = this.distance - 0.5;
+       this.speed = this.distance/time;
     }
 
     // Called just before this Command runs the first time
@@ -40,7 +42,7 @@ public class AutoTurnAngleWithEncoders extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (getDistanceTraveledAvg() < slowAngle) {
+    	if (getDistanceTraveledAvg() < slowDistance) {
     		drive(1.0); // drive at SPEED
     	} else {
     		drive(0.5); // drive at 0.2 * SPEED
@@ -50,7 +52,7 @@ public class AutoTurnAngleWithEncoders extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return getDistanceTraveledAvg() >= angle;
+    	return getDistanceTraveledAvg() >= distance;
     }
 
     // Called once after isFinished returns true
@@ -70,13 +72,13 @@ public class AutoTurnAngleWithEncoders extends Command {
 
 		double motorSpeed = speedMultiplier * speed;
 		
-    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * Robot.driveTrain.UNITS_PER_FOOT) * direction);
-    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * Robot.driveTrain.UNITS_PER_FOOT) * -direction);
+    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * correctionFactor) * -directionR);
+    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * correctionFactor) * directionR);
     }
     
     private double getDistanceTraveledAvg()
     {
-    	return (getDistanceTraveledL() + getDistanceTraveledR()) / 2.0;
+    	return (Math.abs(getDistanceTraveledL()) + Math.abs(getDistanceTraveledR())) / 2.0;
     }
     
     private double getDistanceTraveledL()
