@@ -12,7 +12,8 @@ public class AutoTurnAngleWithEncoders extends Command {
 	private static final double radius = 1.2;
 	private final double distance;
 	private final double directionR;
-	private final double speed;
+	private final double speed = 0.5;
+	private final double speedIndex;
 	
 	private final double slowDistance;
 	
@@ -22,16 +23,16 @@ public class AutoTurnAngleWithEncoders extends Command {
     /**
      * 
      * @param angle in degrees
-     * @param time in seconds
+     * @param index of speed to use
      */
-	public AutoTurnAngleWithEncoders(double angle, double time) {
+	public AutoTurnAngleWithEncoders(double angle, double speedIndex) {
        requires(Robot.driveTrain);
         
        this.directionR = (angle >= 0.0) ? 1.0 : -1.0;
        
        this.distance = Math.abs((angle/360)*2*Math.PI*radius);
        this.slowDistance = this.distance - 0.5;
-       this.speed = this.distance/time;
+       this.speedIndex = speedIndex;
     }
 
     // Called just before this Command runs the first time

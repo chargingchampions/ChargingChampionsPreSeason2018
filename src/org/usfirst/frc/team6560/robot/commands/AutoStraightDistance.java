@@ -11,7 +11,8 @@ public class AutoStraightDistance extends Command {
 	private static final double correctionFactor = 2;
 	private final double distance;
 	private final double direction;
-	private final double speed;
+	private final double speed = 5;
+	private final double speedIndex;
 	
 	private final double slowDistance;
 	
@@ -21,16 +22,16 @@ public class AutoStraightDistance extends Command {
     /**
      * 
      * @param distance in ft
-     * @param time in seconds
+     * @param index of speed to use
      */
-	public AutoStraightDistance(double distance, double time) {
+	public AutoStraightDistance(double distance, double speedIndex) {
        requires(Robot.driveTrain);
         
        this.direction = (distance >= 0.0) ? 1.0 : -1.0;
        
        this.distance = Math.abs(distance);
        this.slowDistance = this.distance - 1.5;
-       this.speed = this.distance/time;
+       this.speedIndex = speedIndex;
     }
 
     // Called just before this Command runs the first time

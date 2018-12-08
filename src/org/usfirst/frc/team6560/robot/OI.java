@@ -44,8 +44,8 @@ public class OI {
 		
 		secondButton10.whenPressed(new JoystickDrive());
 		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(10, 1));
-		secondButton12.whenPressed(new AutoStraightDistance(10, 4));
-		secondButton11.whenPressed(new AutoStraightDistance(-10, 4));
+		secondButton12.whenPressed(new AutoStraightDistance(10, 10));
+		secondButton11.whenPressed(new AutoStraightDistance(-10, 10));
 
 				// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
