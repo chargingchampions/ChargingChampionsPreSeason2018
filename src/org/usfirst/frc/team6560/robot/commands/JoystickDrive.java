@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class JoystickDrive extends Command {
 	public static final double TURN_SPEED = 0.5;
+	public static final double MAX_SPEED = 10;
 
     public JoystickDrive() {
         requires(Robot.driveTrain);
@@ -24,12 +25,10 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	System.out.println("Hello");
     	double x = -Robot.oi.logitechJoystick.getX();
     	double y = Robot.oi.logitechJoystick.getY();
     	
-    	double multiplier = Math.abs(Robot.oi.logitechJoystick.getThrottle() * 2000);
-    	multiplier = 1000.0;
+    	double multiplier = (Robot.oi.logitechJoystick.getThrottle() + 1.0) / 2 * MAX_SPEED;
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
