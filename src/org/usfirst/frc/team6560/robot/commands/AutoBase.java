@@ -5,7 +5,7 @@ import org.usfirst.frc.team6560.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class AutoBase extends Command {
-	private static final double correctionFactor = 2;
+	private static final double correctionFactor = 2.5;
 
 	private final double speed;
 	private final double slowSpeed;
@@ -19,12 +19,14 @@ public abstract class AutoBase extends Command {
 	private double startPositionR;
 	
 	public AutoBase(double speed, double slowSpeed, double distance, boolean invertL) {
+	    requires(Robot.driveTrain);
+
 		this.speed = speed;
 		this.slowSpeed = slowSpeed;
-		this.distance = distance;
+		this.distance = Math.abs(distance);
 		this.invertL = invertL;
 		
-		this.slowDistance = 0.5 * speed;
+		this.slowDistance = this.distance - 1 * speed;
 	    this.direction = (distance >= 0.0) ? 1.0 : -1.0;
 	    
 	}
@@ -48,7 +50,7 @@ public abstract class AutoBase extends Command {
     }
 	
     protected void end() {
-    	Robot.driveTrain.stop();
+    	Robot.driveTrain.stopImmediately();
     }
 
     // Called when another command which requires one or more of the same

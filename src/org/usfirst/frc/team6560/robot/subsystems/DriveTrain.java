@@ -47,8 +47,8 @@ public class DriveTrain extends Subsystem {
 	    motorL1.config_kD(0, 0);
 	    motorR1.config_kD(0, 0);
 	    
-	    motorR1.config_kI(0, 0.001);
-	    motorL1.config_kI(0, 0.001);
+	    motorR1.config_kI(0, 0.0008);
+	    motorL1.config_kI(0, 0.0008);
 
 
 	    motorL1.setSensorPhase(true);
@@ -138,6 +138,15 @@ public class DriveTrain extends Subsystem {
     public void setVelR(double vel) {
     	velR = vel*UNITS_PER_FOOT/10;
     	updateMotorControllers();
+    }
+    
+    public void stopImmediately() {
+    	setVelL(0);
+    	setVelR(0);
+    	
+    	motorL1.setIntegralAccumulator(0);
+    	motorR1.setIntegralAccumulator(0);
+
     }
     
     /**
