@@ -12,7 +12,7 @@ public class AutoTurnAngleWithEncoders extends Command {
 	private static final double radius = 1.2;
 	private final double distance;
 	private final double directionR;
-	private final double speed = 0.5;
+	private final double speed = 2;
 	private final double speedIndex;
 	
 	private final double slowDistance;
