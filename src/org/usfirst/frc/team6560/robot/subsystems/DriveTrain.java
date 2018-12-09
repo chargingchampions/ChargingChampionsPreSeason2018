@@ -16,14 +16,16 @@ public class DriveTrain extends Subsystem {
 	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
 	public static final double RAMP_TIME = 0;
 
-	public WPI_TalonSRX motorR1;
-	WPI_TalonSRX motorR2;
+	private WPI_TalonSRX motorR1;
+	private WPI_TalonSRX motorR2;
 	
-	public WPI_TalonSRX motorL1;
-	WPI_TalonSRX motorL2;
+	private WPI_TalonSRX motorL1;
+	private WPI_TalonSRX motorL2;
 	
 	private double velL = 0.0;
 	private double velR = 0.0;
+	
+	private boolean isSafe = true;
 		
 	public DriveTrain() {
 		super();
@@ -64,6 +66,21 @@ public class DriveTrain extends Subsystem {
 	    
 	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
 	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
+	}
+	
+	@Override
+	public void periodic() {
+		super.periodic();
+		
+		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 100000.0) {
+			isSafe = false;
+		}
+		
+		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 100000.0) {
+			isSafe = false;
+		}
+		
+		updateMotorControllers();
 	}
 
     // Put methods for controlling this subsystem
@@ -111,15 +128,17 @@ public class DriveTrain extends Subsystem {
 //    }
 
 	public void updateMotorControllers() {
-		motorL1.set(ControlMode.Velocity, velL);
-    	motorR1.set(ControlMode.Velocity, velR);
-	}
-	
-	public void setDirectOutputL(double output) {
-		motorL1.set(ControlMode.PercentOutput, output);
-	}
-	public void setDirectOutputR(double output) {
-		motorR1.set(ControlMode.PercentOutput, output);
+		if (isSafe) {
+			motorL1.set(ControlMode.Velocity, velL);
+	    	motorR1.set(ControlMode.Velocity, velR);
+		} else {
+			motorL1.set(ControlMode.Velocity, 0); // Cannot call stopImmediately() because it will be recursive
+	    	motorR1.set(ControlMode.Velocity, 0);
+	    	
+			motorL1.setIntegralAccumulator(0);
+	    	motorR1.setIntegralAccumulator(0);
+		}
+		
 	}
 
 	/**
@@ -163,12 +182,6 @@ public class DriveTrain extends Subsystem {
      */
     public double getEncoderPositionR() {
     	return motorR1.getSelectedSensorPosition(0) /  UNITS_PER_FOOT;
-    }
-    
-    
-    public void resetPositions() {
-    	motorL1.setSelectedSensorPosition(0, 0, 0); // TODO see if third argument is necessary
-    	motorR1.setSelectedSensorPosition(0, 0, 0);
     }
     
     public void stop() {

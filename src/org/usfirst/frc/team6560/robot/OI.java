@@ -2,7 +2,6 @@ package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
-import org.usfirst.frc.team6560.robot.commands.AutoStraightForever;
 import org.usfirst.frc.team6560.robot.commands.AutoTurnAngleWithEncoders;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
