@@ -30,7 +30,7 @@ public class AutoStraightDistance extends Command {
        this.direction = (distance >= 0.0) ? 1.0 : -1.0;
        
        this.distance = Math.abs(distance);
-       this.slowDistance = this.distance - 1.5;
+       this.slowDistance = this.distance - 3;
        this.speedIndex = speedIndex;
     }
 

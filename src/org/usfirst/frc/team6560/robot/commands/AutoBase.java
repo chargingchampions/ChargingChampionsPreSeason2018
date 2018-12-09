@@ -1,49 +1,40 @@
 package org.usfirst.frc.team6560.robot.commands;
 
 import org.usfirst.frc.team6560.robot.Robot;
-import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-
-public class AutoTurnAngleWithEncoders extends Command {
-	
+public abstract class AutoBase extends Command {
 	private static final double correctionFactor = 2;
-	private static final double radius = 1.14;
+
+	private final double speed;
+	private final double slowSpeed;
 	private final double distance;
-	private final double directionR;
-	private final double speed = 1;
-	private final double speedIndex;
+	private final boolean invertL;
 	
 	private final double slowDistance;
-	private final double slowSpeed = 0.2;
+	private final double direction;
 	
 	private double startPositionL;
 	private double startPositionR;
+	
+	public AutoBase(double speed, double slowSpeed, double distance, boolean invertL) {
+		this.speed = speed;
+		this.slowSpeed = slowSpeed;
+		this.distance = distance;
+		this.invertL = invertL;
 		
-    /**
-     * 
-     * @param angle in degrees
-     * @param index of speed to use
-     */
-	public AutoTurnAngleWithEncoders(double angle, double speedIndex) {
-       requires(Robot.driveTrain);
-        
-       this.directionR = (angle >= 0.0) ? 1.0 : -1.0;
-       
-       this.distance = Math.abs((angle/360)*2*Math.PI*radius);
-       this.slowDistance = this.distance - 0.5 * speed;
-       this.speedIndex = speedIndex;
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
+		this.slowDistance = 0.5 * speed;
+	    this.direction = (distance >= 0.0) ? 1.0 : -1.0;
+	    
+	}
+	
+	protected void initialize() {
     	startPositionL = Robot.driveTrain.getEncoderPositionL();
     	startPositionR = Robot.driveTrain.getEncoderPositionR();
     }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+	
+	protected void execute() {
     	if (getDistanceTraveledAvg() < slowDistance) {
     		drive(speed); // drive at SPEED
     	} else {
@@ -51,13 +42,11 @@ public class AutoTurnAngleWithEncoders extends Command {
     	}
     }
     
-
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	return getDistanceTraveledAvg() >= distance;
     }
-
-    // Called once after isFinished returns true
+	
     protected void end() {
     	Robot.driveTrain.stop();
     }
@@ -72,13 +61,13 @@ public class AutoTurnAngleWithEncoders extends Command {
     	double errorL = Math.max(0, getDistanceTraveledL() - getDistanceTraveledR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		double errorR = Math.max(0, getDistanceTraveledR() - getDistanceTraveledL()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		
-    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * correctionFactor) * -directionR);
-    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * correctionFactor) * directionR);
+    	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * correctionFactor) * (invertL ? -direction : direction));
+    	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * correctionFactor) * direction);
     }
     
     private double getDistanceTraveledAvg()
     {
-    	return (Math.abs(getDistanceTraveledL()) + Math.abs(getDistanceTraveledR())) / 2.0;
+    	return (getDistanceTraveledL() + getDistanceTraveledR()) / 2.0;
     }
     
     private double getDistanceTraveledL()
@@ -90,7 +79,4 @@ public class AutoTurnAngleWithEncoders extends Command {
     {
     	return Math.abs(Robot.driveTrain.getEncoderPositionR() - startPositionR);
     }
-    
-
-    
 }
