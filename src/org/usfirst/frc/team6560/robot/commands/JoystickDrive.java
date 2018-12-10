@@ -33,7 +33,7 @@ public class JoystickDrive extends Command {
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);
 
-        if (radius < 0.05) {
+        if (radius < 0.1) {
             Robot.driveTrain.stop();
             return;
         }

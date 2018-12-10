@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6560.robot.subsystems;
 
+import org.usfirst.frc.team6560.robot.Robot;
 import org.usfirst.frc.team6560.robot.RobotMap;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
@@ -68,17 +69,48 @@ public class DriveTrain extends Subsystem {
 	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
 	}
 	
+	private int safetyCounter = 0;
+	
 	@Override
 	public void periodic() {
 		super.periodic();
 		
-		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 100000.0) {
+		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator() + ", " + safetyCounter);
+		
+		if (safetyCounter < 0) {
+			safetyCounter = 0;
+		}
+		
+		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 130000.0) {
+			safetyCounter += 3;
+		}
+		
+		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 130000.0) {
+			safetyCounter += 3;
+		}
+		
+		--safetyCounter;
+		
+		if (Math.abs(motorR1.getIntegralAccumulator()) > 1500000.0) {
 			isSafe = false;
 		}
 		
-		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 100000.0) {
+		if (Math.abs(motorL1.getIntegralAccumulator()) > 1500000.0) {
 			isSafe = false;
 		}
+		
+		if (safetyCounter > 45) {
+			isSafe = false;
+		}
+		
+		if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_TRIGGER_BUTTON)) {
+			isSafe = false;
+		}
+		
+		if (velL == 0 && velR == 0 && Math.abs(motorL1.getIntegralAccumulator()) < 130000  && Math.abs(motorR1.getIntegralAccumulator()) < 130000) {
+    		motorL1.setIntegralAccumulator(motorL1.getIntegralAccumulator() * 0.9);
+    		motorR1.setIntegralAccumulator(motorR1.getIntegralAccumulator() * 0.9);
+    	}
 		
 		updateMotorControllers();
 	}
@@ -131,6 +163,7 @@ public class DriveTrain extends Subsystem {
 		if (isSafe) {
 			motorL1.set(ControlMode.Velocity, velL);
 	    	motorR1.set(ControlMode.Velocity, velR);
+	    	
 		} else {
 			motorL1.set(ControlMode.Velocity, 0); // Cannot call stopImmediately() because it will be recursive
 	    	motorR1.set(ControlMode.Velocity, 0);
