@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class AutoBase extends Command {
 	private static final double correctionFactor = 2.5;
+	protected static final double radius = 1.212;
 
 	private final double speed;
 	private final double slowSpeed;
@@ -59,25 +60,25 @@ public abstract class AutoBase extends Command {
     	end();
     }
     
-    private void drive(double motorSpeed) {
+    protected void drive(double motorSpeed) {
     	double errorL = Math.max(0, getDistanceTraveledL() - getDistanceTraveledR()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		double errorR = Math.max(0, getDistanceTraveledR() - getDistanceTraveledL()); // errorL is how many units the left wheel is ahead of the right wheel; errorL is 0 if it is not ahead
 		
     	Robot.driveTrain.setVelL(Math.max(motorSpeed * 0.9, motorSpeed - errorL * correctionFactor) * (invertL ? -direction : direction));
     	Robot.driveTrain.setVelR(Math.max(motorSpeed * 0.9, motorSpeed - errorR * correctionFactor) * direction);
     }
-    
-    private double getDistanceTraveledAvg()
+        
+    protected double getDistanceTraveledAvg()
     {
     	return (getDistanceTraveledL() + getDistanceTraveledR()) / 2.0;
     }
     
-    private double getDistanceTraveledL()
+    protected double getDistanceTraveledL()
     {
     	return Math.abs(Robot.driveTrain.getEncoderPositionL() - startPositionL);
     }
     
-    private double getDistanceTraveledR()
+    protected double getDistanceTraveledR()
     {
     	return Math.abs(Robot.driveTrain.getEncoderPositionR() - startPositionR);
     }

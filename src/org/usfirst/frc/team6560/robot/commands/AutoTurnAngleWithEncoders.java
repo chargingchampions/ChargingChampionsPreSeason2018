@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 
 public class AutoTurnAngleWithEncoders extends AutoBase {
-	private static final double radius = 1.212;
 
 	private static final double speed = 1;
 	private static final double slowSpeed = 0.2;
