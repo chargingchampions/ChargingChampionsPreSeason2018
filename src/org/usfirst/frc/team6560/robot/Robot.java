@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutonomousGroup;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +27,7 @@ import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
+	public static TestSensor testSensor;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -37,6 +39,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		driveTrain = new DriveTrain();
+		testSensor = new TestSensor();
 		oi = new OI();
 		
 	}
