@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
+import org.usfirst.frc.team6560.robot.commands.AutoAlignToWall;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutoTurnAngleWithEncoders;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
@@ -42,12 +43,13 @@ public class OI {
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
 		
-		secondButton10.whenPressed(new JoystickDrive());
-		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(90, 1));
-		secondButton8.whenPressed(new AutoTurnAngleWithEncoders(-90, 1));
+		secondButton9.whenPressed(new AutoAlignToWall());
+//		secondButton10.whenPressed(new JoystickDrive());
+//		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(90, 1));
+//		secondButton8.whenPressed(new AutoTurnAngleWithEncoders(-90, 1));
 
-		secondButton12.whenPressed(new AutoStraightDistance(10, 10));
-		secondButton11.whenPressed(new AutoStraightDistance(-10, 10));
+//		secondButton12.whenPressed(new AutoStraightDistance(10, 10));
+//		secondButton11.whenPressed(new AutoStraightDistance(-10, 10));
 
 				// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));

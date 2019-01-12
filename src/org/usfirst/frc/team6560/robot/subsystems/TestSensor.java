@@ -9,11 +9,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class TestSensor extends Subsystem {
-	public final AnalogInput sensor0;
+	public final AnalogInput sensorL;
+	public final AnalogInput sensorR;
 	public TestSensor()
 	{
-		sensor0 = new AnalogInput(0);
-		sensor0.setAverageBits(4);
+		sensorL = new AnalogInput(0);
+		sensorL.setAverageBits(2);
+		
+		sensorR = new AnalogInput(0);
+		sensorR.setAverageBits(2);
 	}
 
     // Put methods for controlling this subsystem
@@ -24,24 +28,25 @@ public class TestSensor extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-	private int counter = 0;
-	private double voltage = 0;
-	private double distance = 0;
     public void periodic()
     {
-
-        	System.out.println("Voltage: " + getVoltage() + " Distance: " + getDistance());
-
     }
     
-    public double getDistance()
+    // distances are in feet
+    
+    public double getDistanceL()
     {
-    	return 5 * ( sensor0.getAverageVoltage() / (5.0 / 1024.0)) ;
+    	return getDistance(sensorL.getAverageVoltage());
     }
     
-    public double getVoltage()
+    public double getDistanceR()
     {
-    	return  sensor0.getAverageVoltage();
+    	return getDistance(sensorR.getAverageVoltage());
+    }
+    
+    private double getDistance(double voltage)
+    {
+    	return (5 * (voltage / (5.0 / 1024.0))) / 304.8;
     }
 }
 
