@@ -15,11 +15,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public final Joystick logitechJoystick;
-	public final AnalogInput sensor0;
 	
 	public OI() {
 		logitechJoystick = new Joystick(Joysticks.LOGITECH_JOYSTICK_ID);
-		sensor0 = new AnalogInput(0);
 //		JoystickButton aButton = new JoystickButton(gamepad, Joysticks.A_BUTTON);
 //		JoystickButton bButton = new JoystickButton(gamepad, Joysticks.B_BUTTON);
 //		JoystickButton xButton = new JoystickButton(gamepad, Joysticks.X_BUTTON);

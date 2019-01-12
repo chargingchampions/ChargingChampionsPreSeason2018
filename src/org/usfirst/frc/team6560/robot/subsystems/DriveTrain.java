@@ -74,9 +74,7 @@ public class DriveTrain extends Subsystem {
 	@Override
 	public void periodic() {
 		super.periodic();
-		
-		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator() + ", " + safetyCounter);
-		
+				
 		if (safetyCounter < 0) {
 			safetyCounter = 0;
 		}
