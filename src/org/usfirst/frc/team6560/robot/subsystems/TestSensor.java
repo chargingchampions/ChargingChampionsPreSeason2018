@@ -16,7 +16,7 @@ public class TestSensor extends Subsystem {
 		sensorL = new AnalogInput(0);
 		sensorL.setAverageBits(2);
 		
-		sensorR = new AnalogInput(0);
+		sensorR = new AnalogInput(1);
 		sensorR.setAverageBits(2);
 	}
 

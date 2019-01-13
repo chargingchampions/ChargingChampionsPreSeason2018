@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
  */
 public class AutoAlignToWall extends Command {
 	private static final int SAMPLES = 10;
-	private static final double SENSOR_SEPARATION = 2;
+	private static final double SENSOR_SEPARATION = 9.3 / 12.0;
 
 	private int samples;
 	
@@ -39,6 +39,8 @@ public class AutoAlignToWall extends Command {
     	{
     		sensorTotalL += Robot.testSensor.getDistanceL();
     		sensorTotalR += Robot.testSensor.getDistanceR();
+    		
+    		++samples;
     	}
     	else
     	{
@@ -55,12 +57,14 @@ public class AutoAlignToWall extends Command {
     protected void end() {
     	double sensorAvgL = sensorTotalL / samples;
     	double sensorAvgR = sensorTotalR / samples;
-
+    	
     	double sensorDiff = sensorAvgR - sensorAvgL;
     	
     	double angle = Math.atan(sensorDiff / SENSOR_SEPARATION);
     	
-    	Scheduler.getInstance().add(new AutoTurnAngleWithEncoders(angle * 180 / Math.PI, 0));
+    	System.out.println("L: " + sensorAvgL + " " + "R: " + sensorAvgR + " Angle: " + angle * 180 / Math.PI);
+
+    	// Scheduler.getInstance().add(new AutoTurnAngleWithEncoders(angle * 180 / Math.PI, 0));
     }
 
     // Called when another command which requires one or more of the same

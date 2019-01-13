@@ -20,6 +20,8 @@ public abstract class AutoBase extends Command {
 	
 	public AutoBase(double speed, double slowSpeed, double distance, boolean invertL) {
 	    requires(Robot.driveTrain);
+	    
+
 
 		this.speed = speed;
 		this.slowSpeed = slowSpeed;
@@ -32,6 +34,8 @@ public abstract class AutoBase extends Command {
 	}
 	
 	protected void initialize() {
+		Robot.driveTrain.setAutonomous();
+		
     	startPositionL = Robot.driveTrain.getEncoderPositionL();
     	startPositionR = Robot.driveTrain.getEncoderPositionR();
     }

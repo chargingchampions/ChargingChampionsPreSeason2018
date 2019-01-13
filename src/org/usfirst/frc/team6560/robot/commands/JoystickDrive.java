@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JoystickDrive extends Command {
-	public static final double TURN_SPEED = 0.5;
+	public static final double TURN_SPEED = 0.3;
 	public static final double MAX_SPEED = 10;
 
     public JoystickDrive() {
@@ -20,6 +20,7 @@ public class JoystickDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("Running JoystickDrive command...");
+    	Robot.driveTrain.setManual();
     	Robot.driveTrain.stop();
     }
 

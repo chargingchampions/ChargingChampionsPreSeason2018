@@ -3,6 +3,8 @@
 //import org.usfirst.frc.team6560.robot.Robot;
 //import org.usfirst.frc.team6560.robot.RobotMap;
 //
+//import com.ctre.phoenix.motorcontrol.ControlMode;
+//
 //import edu.wpi.first.wpilibj.command.Command;
 //
 ///**
@@ -23,44 +25,18 @@
 //
 //    // Called just before this Command runs the first time
 //    protected void initialize() {
-//    	speed = 0.0;
-//    	kF = 0.0;
-//    	//kI = 2.0E-4;
 //    	setValues();
 //    }
 //    
 //    private void setValues() {
-//    	
-//    	Robot.driveTrain.motorL1.config_kF(0, kF);
-//    	Robot.driveTrain.motorR1.config_kF(0, kF);
-//    	
-//    	Robot.driveTrain.motorL1.config_kI(0, kI);
-//    	Robot.driveTrain.motorR1.config_kI(0, kI);
+//    	Robot.driveTrain.motorL1.set(ControlMode.PercentOutput, 0.6);
+//    	Robot.driveTrain.motorR1.set(ControlMode.PercentOutput, 0.6);
+//
 //    }
 //
 //    // Called repeatedly when this Command is scheduled to run
 //    protected void execute() {
-//    	System.out.println("kF: " + kF + " kI: " + kI);
-//
-//    	if (Math.abs(Robot.oi.logitechJoystick.getY()) > 0.2) {
-//    		
-//    		if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_BUTTON_5)) {
-//        		kF += 0.0001 * Robot.oi.logitechJoystick.getY();
-//        		setValues();
-//        	}
-//        	
-//    		else if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_BUTTON_3)) {
-//        		kI += 0.00001 * Robot.oi.logitechJoystick.getY();
-//        		setValues();
-//        	}
-//        	else {
-//        		speed += Robot.oi.logitechJoystick.getY();
-//        	}
-//    	}
-//
-//    	
-//    	Robot.driveTrain.setVelL(speed);
-//    	Robot.driveTrain.setVelR(speed);
+//    	System.out.println(Robot.driveTrain.motorL1.getSelectedSensorVelocity() + ", " + Robot.driveTrain.motorR1.getSelectedSensorVelocity());
 //
 //    }
 //
@@ -71,10 +47,13 @@
 //
 //    // Called once after isFinished returns true
 //    protected void end() {
+//    	Robot.driveTrain.stop();
 //    }
 //
 //    // Called when another command which requires one or more of the same
 //    // subsystems is scheduled to run
 //    protected void interrupted() {
+//    	Robot.driveTrain.stop();
+//
 //    }
 //}

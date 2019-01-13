@@ -41,17 +41,7 @@ public class DriveTrain extends Subsystem {
 	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
 	    
-	    motorL1.config_kF(0, 0);
-	    motorR1.config_kF(0, 0);
-	    
-	    motorL1.config_kP(0, 0);
-	    motorR1.config_kP(0, 0);
 	   
-	    motorL1.config_kD(0, 0);
-	    motorR1.config_kD(0, 0);
-	    
-	    motorR1.config_kI(0, 0.0008);
-	    motorL1.config_kI(0, 0.0008);
 
 
 	    motorL1.setSensorPhase(true);
@@ -67,6 +57,36 @@ public class DriveTrain extends Subsystem {
 	    
 	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
 	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
+	}
+	
+	public void setAutonomous()
+	{
+		motorL1.config_kF(0, 0);
+	    motorR1.config_kF(0, 0);
+	    
+	    motorL1.config_kP(0, 0);
+	    motorR1.config_kP(0, 0);
+	   
+	    motorL1.config_kD(0, 0);
+	    motorR1.config_kD(0, 0);
+	    
+	    motorR1.config_kI(0, 0.0008);
+	    motorL1.config_kI(0, 0.0008);
+	}
+	
+	public void setManual()
+	{
+		motorL1.config_kF(0, 0.483307086);
+		motorR1.config_kF(0, 0.483307086);
+		    
+	    motorL1.config_kP(0, 0);
+	    motorR1.config_kP(0, 0);
+		   
+	    motorL1.config_kD(0, 0);
+	    motorR1.config_kD(0, 0);
+	    
+	    motorR1.config_kI(0, 0);
+	    motorL1.config_kI(0, 0);
 	}
 	
 	private int safetyCounter = 0;
@@ -87,15 +107,15 @@ public class DriveTrain extends Subsystem {
 			safetyCounter += 3;
 		}
 		
+		if (Math.abs(motorL1.getIntegralAccumulator()) > 2000000.0) {
+			isSafe = false;
+		}
+		
+		if (Math.abs(motorR1.getIntegralAccumulator()) > 2000000.0) {
+			isSafe = false;
+		}
+		
 		--safetyCounter;
-		
-		if (Math.abs(motorR1.getIntegralAccumulator()) > 1500000.0) {
-			isSafe = false;
-		}
-		
-		if (Math.abs(motorL1.getIntegralAccumulator()) > 1500000.0) {
-			isSafe = false;
-		}
 		
 		if (safetyCounter > 45) {
 			isSafe = false;

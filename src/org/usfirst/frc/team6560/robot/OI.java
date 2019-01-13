@@ -43,7 +43,7 @@ public class OI {
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
 		
-		secondButton9.whenPressed(new AutoAlignToWall());
+		//secondButton12.whenPressed(new AutoStraightForever());
 //		secondButton10.whenPressed(new JoystickDrive());
 //		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(90, 1));
 //		secondButton8.whenPressed(new AutoTurnAngleWithEncoders(-90, 1));
