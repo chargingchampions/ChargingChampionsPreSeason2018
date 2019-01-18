@@ -14,6 +14,9 @@ public class RobotMap {
 
     public static final int L1_ID = 9;
     public static final int L2_ID = 8;
+    
+    public static final int AL_ID = 7;
+    public static final int AR_ID = 4;
 
 
 	public static class CAN {

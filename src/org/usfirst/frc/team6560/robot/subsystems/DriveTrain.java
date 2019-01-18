@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
 	public static final double UNITS_PER_FOOT = 4096 / (Math.PI / 2.0);
-	public static final double RAMP_TIME = 0;
+	public static final double RAMP_TIME = 0.5;
 
 	private WPI_TalonSRX motorR1;
 	private WPI_TalonSRX motorR2;
 	
 	private WPI_TalonSRX motorL1;
 	private WPI_TalonSRX motorL2;
+	
 	
 	private double velL = 0.0;
 	private double velR = 0.0;
@@ -40,9 +41,55 @@ public class DriveTrain extends Subsystem {
 	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
+	    motorL1.setSensorPhase(true);
 	    
-	   
+	    motorR1.setInverted(true);
+	    motorR2.setInverted(true);
+	    
+	    motorR1.setSensorPhase(true);
+	    
+	    motorR2.follow(motorR1);
+	    motorL2.follow(motorL1);
+	    
+//		System.out.println("configClosedLoopRamp");
+//
+//	    motorL1.configClosedloopRamp(RAMP_TIME, 1000);
+//	    motorR1.configClosedloopRamp(RAMP_TIME, 1000);
+//	    System.out.println("After Closed loop");
+	    
+	    
+	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
+	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
+	}
+	
+	public void setAutonomous()
+	{
+//		motorL1.config_kF(0, 0);
+//	    motorR1.config_kF(0, 0);
+//	    
+//	    motorL1.config_kP(0, 0);
+//	    motorR1.config_kP(0, 0);
+//	   
+//	    motorL1.config_kD(0, 0);
+//	    motorR1.config_kD(0, 0);
+//	    
+//	    motorR1.config_kI(0, 0.0008);
+//	    motorL1.config_kI(0, 0.0008);
+//	    
+//	    motorL1.configClosedloopRamp(0, 100);
+//	    motorR1.configClosedloopRamp(0, 100);
+	}
+	
+	public void setManual()
+	{
+		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
+		motorR2 = new WPI_TalonSRX(RobotMap.R2_ID);
 
+	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
+	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
+	    
+	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 
 	    motorL1.setSensorPhase(true);
 	    
@@ -54,39 +101,28 @@ public class DriveTrain extends Subsystem {
 	    motorR2.follow(motorR1);
 	    motorL2.follow(motorL1);
 	    
-	    
-	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
-	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
-	}
-	
-	public void setAutonomous()
-	{
-		motorL1.config_kF(0, 0);
-	    motorR1.config_kF(0, 0);
-	    
-	    motorL1.config_kP(0, 0);
-	    motorR1.config_kP(0, 0);
-	   
-	    motorL1.config_kD(0, 0);
-	    motorR1.config_kD(0, 0);
-	    
-	    motorR1.config_kI(0, 0.0008);
-	    motorL1.config_kI(0, 0.0008);
-	}
-	
-	public void setManual()
-	{
-		motorL1.config_kF(0, 0.483307086);
+	    motorL1.config_kF(0, 0.483307086);
 		motorR1.config_kF(0, 0.483307086);
 		    
+		System.out.println("setting kP");
+
 	    motorL1.config_kP(0, 0);
 	    motorR1.config_kP(0, 0);
 		   
+		System.out.println("setting kD");
+
 	    motorL1.config_kD(0, 0);
 	    motorR1.config_kD(0, 0);
 	    
+		System.out.println("setting kI");
+
 	    motorR1.config_kI(0, 0);
 	    motorL1.config_kI(0, 0);
+	    
+
+	    motorL1.configClosedloopRamp(RAMP_TIME, 100);
+	    motorR1.configClosedloopRamp(RAMP_TIME, 100);
+	    
 	}
 	
 	private int safetyCounter = 0;
@@ -99,21 +135,25 @@ public class DriveTrain extends Subsystem {
 			safetyCounter = 0;
 		}
 		
-		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 130000.0) {
-			safetyCounter += 3;
-		}
-		
-		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 130000.0) {
-			safetyCounter += 3;
-		}
-		
-		if (Math.abs(motorL1.getIntegralAccumulator()) > 2000000.0) {
-			isSafe = false;
-		}
-		
-		if (Math.abs(motorR1.getIntegralAccumulator()) > 2000000.0) {
-			isSafe = false;
-		}
+		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator());
+		System.out.println(motorL1.getSelectedSensorVelocity() + ", " + motorR1.getSelectedSensorVelocity());
+
+//		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 130000.0) {
+//			safetyCounter += 3;
+//		}
+//		
+//		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 130000.0) {
+//			safetyCounter += 3;
+//		}
+ 
+
+//		if (Math.abs(motorL1.getIntegralAccumulator()) > 20000000.0) {
+//			isSafe = false;
+//		}
+//		
+//		if (Math.abs(motorR1.getIntegralAccumulator()) > 20000000.0) {
+//			isSafe = false;
+//		}
 		
 		--safetyCounter;
 		
@@ -183,6 +223,7 @@ public class DriveTrain extends Subsystem {
 	    	motorR1.set(ControlMode.Velocity, velR);
 	    	
 		} else {
+			System.out.println("unsafe");
 			motorL1.set(ControlMode.Velocity, 0); // Cannot call stopImmediately() because it will be recursive
 	    	motorR1.set(ControlMode.Velocity, 0);
 	    	

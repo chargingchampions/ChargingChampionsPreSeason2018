@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6560.robot.commands;
 
 import org.usfirst.frc.team6560.robot.Robot;
+import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JoystickDrive extends Command {
-	public static final double TURN_SPEED = 0.3;
-	public static final double MAX_SPEED = 10;
+	public static final double TURN_SPEED = 0.5;
+	public static final double MAX_SPEED = 15;
 
     public JoystickDrive() {
         requires(Robot.driveTrain);
@@ -39,7 +40,9 @@ public class JoystickDrive extends Command {
             return;
         }
 
-        double s = TURN_SPEED / 2;
+        double s = (TURN_SPEED / 2) - (TURN_SPEED / 2) * (multiplier / 20);
+        
+        if (s > 0.5 || s < 0.0) throw new RuntimeException("Uh");
 
         double cosSign = Math.copySign(1.0, Math.cos(t));
         double sinSign = Math.copySign(1.0, Math.sin(t));

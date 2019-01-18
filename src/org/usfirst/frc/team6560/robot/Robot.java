@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutonomousGroup;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team6560.robot.subsystems.TestArm;
 import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
 
 /**
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static TestSensor testSensor;
+	public static TestArm testArm;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,6 +42,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		driveTrain = new DriveTrain();
 		testSensor = new TestSensor();
+		testArm = new TestArm();
 		oi = new OI();
 		
 	}

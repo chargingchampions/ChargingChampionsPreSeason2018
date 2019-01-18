@@ -2,6 +2,7 @@ package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
 import org.usfirst.frc.team6560.robot.commands.AutoAlignToWall;
+import org.usfirst.frc.team6560.robot.commands.AutoArmTurn;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutoTurnAngleWithEncoders;
 import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
@@ -50,6 +51,7 @@ public class OI {
 
 //		secondButton12.whenPressed(new AutoStraightDistance(10, 10));
 //		secondButton11.whenPressed(new AutoStraightDistance(-10, 10));
+		
 
 				// drive buttons
 		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
