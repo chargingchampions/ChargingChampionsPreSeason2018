@@ -28,10 +28,16 @@ public class DriveTrain extends Subsystem {
 	private double velR = 0.0;
 	
 	private boolean isSafe = true;
+	private double kI_safety = 0.0008;
 		
 	public DriveTrain() {
 		super();
 		
+		setManual();
+	}
+	
+	public void setAutonomous()
+	{
 		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
 		motorR2 = new WPI_TalonSRX(RobotMap.R2_ID);
 
@@ -51,33 +57,22 @@ public class DriveTrain extends Subsystem {
 	    motorR2.follow(motorR1);
 	    motorL2.follow(motorL1);
 	    
-//		System.out.println("configClosedLoopRamp");
-//
-//	    motorL1.configClosedloopRamp(RAMP_TIME, 1000);
-//	    motorR1.configClosedloopRamp(RAMP_TIME, 1000);
-//	    System.out.println("After Closed loop");
+		motorL1.config_kF(0, 0);
+	    motorR1.config_kF(0, 0);
 	    
+	    motorL1.config_kP(0, 0);
+	    motorR1.config_kP(0, 0);
+	   
+	    motorL1.config_kD(0, 0);
+	    motorR1.config_kD(0, 0);
 	    
-	    motorL1.configClosedloopRamp(RAMP_TIME, 30);
-	    motorR1.configClosedloopRamp(RAMP_TIME, 30);
-	}
-	
-	public void setAutonomous()
-	{
-//		motorL1.config_kF(0, 0);
-//	    motorR1.config_kF(0, 0);
-//	    
-//	    motorL1.config_kP(0, 0);
-//	    motorR1.config_kP(0, 0);
-//	   
-//	    motorL1.config_kD(0, 0);
-//	    motorR1.config_kD(0, 0);
-//	    
-//	    motorR1.config_kI(0, 0.0008);
-//	    motorL1.config_kI(0, 0.0008);
-//	    
-//	    motorL1.configClosedloopRamp(0, 100);
-//	    motorR1.configClosedloopRamp(0, 100);
+	    motorR1.config_kI(0, 0.0008);
+	    motorL1.config_kI(0, 0.0008);
+	    
+	    kI_safety = 0.0008;
+	    
+	    motorL1.configClosedloopRamp(0, 100);
+	    motorR1.configClosedloopRamp(0, 100);
 	}
 	
 	public void setManual()
@@ -119,7 +114,8 @@ public class DriveTrain extends Subsystem {
 	    motorR1.config_kI(0, 0);
 	    motorL1.config_kI(0, 0);
 	    
-
+	    kI_safety = 0;
+	    
 	    motorL1.configClosedloopRamp(RAMP_TIME, 100);
 	    motorR1.configClosedloopRamp(RAMP_TIME, 100);
 	    
@@ -138,13 +134,13 @@ public class DriveTrain extends Subsystem {
 		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator());
 		System.out.println(motorL1.getSelectedSensorVelocity() + ", " + motorR1.getSelectedSensorVelocity());
 
-//		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) > 130000.0) {
-//			safetyCounter += 3;
-//		}
-//		
-//		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) > 130000.0) {
-//			safetyCounter += 3;
-//		}
+		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) * kI_safety > 104.0) {
+			safetyCounter += 3;
+		}
+		
+		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) * kI_safety > 104.0) {
+			safetyCounter += 3;
+		}
  
 
 //		if (Math.abs(motorL1.getIntegralAccumulator()) > 20000000.0) {

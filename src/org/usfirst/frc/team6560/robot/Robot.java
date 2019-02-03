@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team6560.robot;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutonomousGroup;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team6560.robot.subsystems.TestArm;
+import org.usfirst.frc.team6560.robot.subsystems.Elevator;
 import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
 
 /**
@@ -28,8 +29,8 @@ import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
 public class Robot extends TimedRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
-	public static TestSensor testSensor;
-	public static TestArm testArm;
+	public static Elevator elevator;
+	public static NetworkTableInstance nt;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -41,9 +42,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		driveTrain = new DriveTrain();
-		testSensor = new TestSensor();
-		testArm = new TestArm();
+		elevator = new Elevator();
 		oi = new OI();
+		nt = NetworkTableInstance.getDefault();
 		
 	}
 

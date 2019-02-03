@@ -1,13 +1,7 @@
 package org.usfirst.frc.team6560.robot;
 
 import org.usfirst.frc.team6560.robot.RobotMap.Joysticks;
-import org.usfirst.frc.team6560.robot.commands.AutoAlignToWall;
-import org.usfirst.frc.team6560.robot.commands.AutoArmTurn;
-import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
-import org.usfirst.frc.team6560.robot.commands.AutoTurnAngleWithEncoders;
-import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 

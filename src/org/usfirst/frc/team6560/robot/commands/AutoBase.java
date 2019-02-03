@@ -40,7 +40,8 @@ public abstract class AutoBase extends Command {
     	startPositionR = Robot.driveTrain.getEncoderPositionR();
     }
 	
-	protected void execute() {
+	@Override
+	public void execute() {
     	if (getDistanceTraveledAvg() < slowDistance) {
     		drive(speed); // drive at SPEED
     	} else {
@@ -49,17 +50,17 @@ public abstract class AutoBase extends Command {
     }
     
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    public boolean isFinished() {
     	return getDistanceTraveledAvg() >= distance;
     }
 	
-    protected void end() {
+    public void end() {
     	Robot.driveTrain.stopImmediately();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    public void interrupted() {
     	end();
     }
     
