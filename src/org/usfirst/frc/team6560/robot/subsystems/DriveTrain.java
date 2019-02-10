@@ -157,10 +157,6 @@ public class DriveTrain extends Subsystem {
 			isSafe = false;
 		}
 		
-		if (Robot.oi.logitechJoystick.getRawButton(RobotMap.Joysticks.SECOND_TRIGGER_BUTTON)) {
-			isSafe = false;
-		}
-		
 		if (velL == 0 && velR == 0 && Math.abs(motorL1.getIntegralAccumulator()) < 130000  && Math.abs(motorR1.getIntegralAccumulator()) < 130000) {
     		motorL1.setIntegralAccumulator(motorL1.getIntegralAccumulator() * 0.9);
     		motorR1.setIntegralAccumulator(motorR1.getIntegralAccumulator() * 0.9);
