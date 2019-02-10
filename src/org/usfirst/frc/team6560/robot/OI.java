@@ -14,16 +14,6 @@ public class OI {
 	
 	public OI() {
 		logitechJoystick = new Joystick(Joysticks.LOGITECH_JOYSTICK_ID);
-//		JoystickButton aButton = new JoystickButton(gamepad, Joysticks.A_BUTTON);
-//		JoystickButton bButton = new JoystickButton(gamepad, Joysticks.B_BUTTON);
-//		JoystickButton xButton = new JoystickButton(gamepad, Joysticks.X_BUTTON);
-//		JoystickButton yButton = new JoystickButton(gamepad, Joysticks.Y_BUTTON);
-//		JoystickButton leftIndex = new JoystickButton(gamepad, Joysticks.LEFT_INDEX_BUTTON);
-//		JoystickButton rightIndex = new JoystickButton(gamepad, Joysticks.RIGHT_INDEX_BUTTON);
-//		JoystickButton backButton = new JoystickButton(gamepad, Joysticks.BACK_BUTTON);
-//		JoystickButton startButton = new JoystickButton(gamepad, Joysticks.START_BUTTON);
-//		JoystickButton leftAxisButton = new JoystickButton(gamepad, Joysticks.LEFT_AXIS_BUTTON);
-//		JoystickButton rightAxisButton = new JoystickButton(gamepad, Joysticks.RIGHT_AXIS_BUTTON);
 
 		JoystickButton secondTrigger = new JoystickButton(logitechJoystick, Joysticks.SECOND_TRIGGER_BUTTON);
 		JoystickButton secondRightThumb = new JoystickButton(logitechJoystick, Joysticks.SECOND_RIGHT_THUMB_BUTTON);
@@ -37,36 +27,6 @@ public class OI {
 		JoystickButton secondButton10 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_10);
 		JoystickButton secondButton11 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_11);
 		JoystickButton secondButton12 = new JoystickButton(logitechJoystick, Joysticks.SECOND_BUTTON_12);
-		
-		//secondButton12.whenPressed(new AutoStraightForever());
-//		secondButton10.whenPressed(new JoystickDrive());
-//		secondButton7.whenPressed(new AutoTurnAngleWithEncoders(90, 1));
-//		secondButton8.whenPressed(new AutoTurnAngleWithEncoders(-90, 1));
-
-//		secondButton12.whenPressed(new AutoStraightDistance(10, 10));
-//		secondButton11.whenPressed(new AutoStraightDistance(-10, 10));
-		
-
-				// drive buttons
-		// i.e. yButton.whileHeld(new TankDriveStraight(0.5));
-
-		// PID buttons
-		/**
-		secondButton3.whenPressed(new PIDSetIntake());
-		secondButton4.whenPressed(new PIDSetSwitch());
-		secondButton6.whenPressed(new PIDSetScale());
-		secondButton5.whenPressed(new PIDSetDefault());
-		**/
-		
-		
-		/**
-		secondButton11.whileHeld(new RotateSecondClimberIn());
-		secondButton12.whileHeld(new RotateSecondClimberOut());
-		**/
-		
-		
-		//hold to go to safety
-		//secondButton3.whenPressed(new RotateGrabberInSafety());
 
 	}
 

@@ -23,7 +23,6 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX motorL1;
 	private WPI_TalonSRX motorL2;
 	
-	
 	private double velL = 0.0;
 	private double velR = 0.0;
 	
@@ -38,50 +37,50 @@ public class DriveTrain extends Subsystem {
 	
 	public void setAutonomous()
 	{
-		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
-		motorR2 = new WPI_TalonSRX(RobotMap.R2_ID);
-
-	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
-	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
-	    
-	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-
-	    motorL1.setSensorPhase(true);
-	    
-	    motorR1.setInverted(true);
-	    motorR2.setInverted(true);
-	    
-	    motorR1.setSensorPhase(true);
-	    
-	    motorR2.follow(motorR1);
-	    motorL2.follow(motorL1);
-	    
-		motorL1.config_kF(0, 0);
-	    motorR1.config_kF(0, 0);
-	    
-	    motorL1.config_kP(0, 0);
-	    motorR1.config_kP(0, 0);
-	   
-	    motorL1.config_kD(0, 0);
-	    motorR1.config_kD(0, 0);
-	    
-	    motorR1.config_kI(0, 0.0008);
-	    motorL1.config_kI(0, 0.0008);
-	    
-	    kI_safety = 0.0008;
-	    
-	    motorL1.configClosedloopRamp(0, 100);
-	    motorR1.configClosedloopRamp(0, 100);
+//		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
+//		motorR2 = new WPI_TalonSRX(RobotMap.R2_ID);
+//
+//	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
+//	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
+//	    
+//	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+//	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+//
+//	    motorL1.setSensorPhase(true);
+//	    
+//	    motorR1.setInverted(true);
+//	    motorR2.setInverted(true);
+//	    
+//	    motorR1.setSensorPhase(true);
+//	    
+//	    motorR2.follow(motorR1);
+//	    motorL2.follow(motorL1);
+//	    
+//		motorL1.config_kF(0, 0);
+//	    motorR1.config_kF(0, 0);
+//	    
+//	    motorL1.config_kP(0, 0);
+//	    motorR1.config_kP(0, 0);
+//	   
+//	    motorL1.config_kD(0, 0);
+//	    motorR1.config_kD(0, 0);
+//	    
+//	    motorR1.config_kI(0, 0.0008);
+//	    motorL1.config_kI(0, 0.0008);
+//	    
+//	    kI_safety = 0.0008;
+//	    
+//	    motorL1.configClosedloopRamp(0, 100);
+//	    motorR1.configClosedloopRamp(0, 100);
 	}
 	
 	public void setManual()
 	{
-		motorR1 = new WPI_TalonSRX(RobotMap.R1_ID);
-		motorR2 = new WPI_TalonSRX(RobotMap.R2_ID);
+		motorR1 = new WPI_TalonSRX(RobotMap.R1_MOTOR);
+		motorR2 = new WPI_TalonSRX(RobotMap.R2_MOTOR);
 
-	    motorL1 = new WPI_TalonSRX(RobotMap.L1_ID);
-	    motorL2 = new WPI_TalonSRX(RobotMap.L2_ID);
+	    motorL1 = new WPI_TalonSRX(RobotMap.L1_MOTOR);
+	    motorL2 = new WPI_TalonSRX(RobotMap.L2_MOTOR);
 	    
 	    motorL1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
 	    motorR1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
@@ -127,21 +126,21 @@ public class DriveTrain extends Subsystem {
 	public void periodic() {
 		super.periodic();
 				
-		if (safetyCounter < 0) {
-			safetyCounter = 0;
-		}
-		
-		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator());
-		System.out.println(motorL1.getSelectedSensorVelocity() + ", " + motorR1.getSelectedSensorVelocity());
-
-		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) * kI_safety > 104.0) {
-			safetyCounter += 3;
-		}
-		
-		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) * kI_safety > 104.0) {
-			safetyCounter += 3;
-		}
- 
+//		if (safetyCounter < 0) {
+//			safetyCounter = 0;
+//		}
+//		
+//		System.out.println(motorL1.getIntegralAccumulator() + ", " + motorR1.getIntegralAccumulator());
+//		System.out.println(motorL1.getSelectedSensorVelocity() + ", " + motorR1.getSelectedSensorVelocity());
+//
+//		if (Math.abs(motorL1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorL1.getIntegralAccumulator()) * kI_safety > 104.0) {
+//			safetyCounter += 3;
+//		}
+//		
+//		if (Math.abs(motorR1.getSelectedSensorVelocity(0)) < 5.0 && Math.abs(motorR1.getIntegralAccumulator()) * kI_safety > 104.0) {
+//			safetyCounter += 3;
+//		}
+// 
 
 //		if (Math.abs(motorL1.getIntegralAccumulator()) > 20000000.0) {
 //			isSafe = false;
@@ -151,11 +150,11 @@ public class DriveTrain extends Subsystem {
 //			isSafe = false;
 //		}
 		
-		--safetyCounter;
-		
-		if (safetyCounter > 45) {
-			isSafe = false;
-		}
+//		--safetyCounter;
+//		
+//		if (safetyCounter > 45) {
+//			isSafe = false;
+//		}
 		
 		if (velL == 0 && velR == 0 && Math.abs(motorL1.getIntegralAccumulator()) < 130000  && Math.abs(motorR1.getIntegralAccumulator()) < 130000) {
     		motorL1.setIntegralAccumulator(motorL1.getIntegralAccumulator() * 0.9);
@@ -170,44 +169,10 @@ public class DriveTrain extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new JoystickDrive());
+		// TODO re-enable JoystickDrive after re-implementing safety features
+		
+		// setDefaultCommand(new JoystickDrive());
 	}
-    
-//    public void radin(double x, double y){
-//    	targetSpeedL = -(y+x);
-//    	targetSpeedR = (y-x);
-//    }
-//
-//    public void onJoystickInputAdrin(double x, double y) {
-//    	y= -y;
-//
-//    	if(x>0){
-//    		if(y>0.5){
-//    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/2); 
-//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}else if(y>=-0.5&&y<=0.5){
-//    			targetSpeedR = y-((1-Math.pow(Math.E, -2*x))/0.86); 
-//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}else if(y<-0.5){
-//    			targetSpeedR = y+((1-Math.pow(Math.E, -2*x))/2); 
-//    			targetSpeedL = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}
-//    	}
-//    	
-//    	else if(x<0){
-//    		if(y>0.5){
-//    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/2); 
-//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}else if(y>=-0.5&&y<=0.5){
-//    			targetSpeedL = y-((1-Math.pow(Math.E, -2*x))/0.86); 
-//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}else if(y<-0.5){
-//    			targetSpeedL = y+((1-Math.pow(Math.E, -2*x))/2); 
-//    			targetSpeedR = Math.pow(Math.abs(x)+Math.abs(y), 0.5);
-//    		}
-//    	}
-//    	
-//    }
 
 	public void updateMotorControllers() {
 		if (isSafe) {

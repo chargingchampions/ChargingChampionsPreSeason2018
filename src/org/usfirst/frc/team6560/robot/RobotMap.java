@@ -8,43 +8,18 @@ package org.usfirst.frc.team6560.robot;
  */
 public class RobotMap {
 
-    // These are temporarily here for the TestMotor
-    public static final int R1_ID = 0;
-    public static final int R2_ID = 1;
-
-    public static final int L1_ID = 9;
-    public static final int L2_ID = 8;
+	// drivetrain motors
+	public static final int R1_MOTOR = 0;
+    public static final int R2_MOTOR = 1;
     
-    public static final int AL_ID = 7;
-    public static final int AR_ID = 4;
+    public static final int L1_MOTOR = 9;
+    public static final int L2_MOTOR = 8;
     
-    public static final int ELEVATOR = 6;
 
-
-	public static class CAN {
-		public static final int DRIVE_FRONTLEFT = 9;
-		public static final int DRIVE_REARLEFT = 10;
-		public static final int DRIVE_FRONTRIGHT = 4;
-		public static final int DRIVE_REARRIGHT = 5;
-		public static final int GRABBER_ROTATION = 1;
-		public static final int GRABBER_RIGHT = 2;
-		public static final int GRABBER_LEFT = 6;
-		public static final int ARM1 = 8;
-		public static final int ARM2 = 3;
-		public static final int CLIMBER = 7;
-		public static final int SECONDCLIMBER = 11;
-
-		public static final int SOLENOID_0 = 0;
-		public static final int SOLENOID_1 = 1;
-		public static final int SOLENOID_2 = 2;
-		public static final int SOLENOID_3 = 3;
-		public static final int SOLENOID_4 = 4;
-		public static final int SOLENOID_5 = 5;
-		public static final int SOLENOID_6 = 6;
-		public static final int SOLENOID_7 = 7;
-		public static final int COMPRESSOR_ID = 0;
-	}
-
+    public static final int ELEVATOR_MOTOR = idk;
+    
+    public static final int FORK_MOTOR = idk; 
+    
 	public static class Joysticks {
 		public static final int LOGITECH_JOYSTICK_ID = 0;
 

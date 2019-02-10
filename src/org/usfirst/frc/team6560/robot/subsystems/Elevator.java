@@ -18,7 +18,7 @@ public class Elevator extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public Elevator() {
-		elevator = new WPI_TalonSRX(RobotMap.ELEVATOR);
+		elevator = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR);
 
 		elevator.config_kF(0, 0);
 	    elevator.config_kP(0, 0);
@@ -32,8 +32,8 @@ public class Elevator extends Subsystem {
         setDefaultCommand(new JoystickElevator());
     }
     
-    public void setRawMotorOutput(double percent) {
-    	elevator.set(ControlMode.PercentOutput, percent);
+    public void setElevatorOutput(double output) {
+    	elevator.set(ControlMode.PercentOutput, output);
     }
     
 }

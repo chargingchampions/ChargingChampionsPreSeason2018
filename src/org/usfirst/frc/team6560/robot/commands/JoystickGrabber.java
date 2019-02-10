@@ -7,28 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class JoystickElevator extends Command {
-	public static final double ELEVATOR_OUTPUT = 0.2;
+public class JoystickGrabber extends Command {
+	public static final double FORK_OUTPUT = 0.2;
 
-    public JoystickElevator() {
-    	requires(Robot.elevator);
+    public JoystickGrabber() {
+    	requires(Robot.grabber);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.setElevatorOutput(0);
+    	Robot.grabber.setForkOutput(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.oi.logitechJoystick.getPOV() == 0) {
-    		Robot.elevator.setElevatorOutput(ELEVATOR_OUTPUT);
-    	} else if (Robot.oi.logitechJoystick.getPOV() == 180) {
-    		Robot.elevator.setElevatorOutput(-ELEVATOR_OUTPUT);
+    	if (Robot.oi.logitechJoystick.getPOV() == 90) {
+    		Robot.grabber.setForkOutput(FORK_OUTPUT);
+    	} else if (Robot.oi.logitechJoystick.getPOV() == 270) {
+    		Robot.grabber.setForkOutput(-FORK_OUTPUT);
     	} else {
-    		Robot.elevator.setElevatorOutput(0);
+    		Robot.grabber.setForkOutput(0);
     	}
     }
 
@@ -39,8 +39,9 @@ public class JoystickElevator extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.setElevatorOutput(0);
+    	Robot.grabber.setForkOutput(0);
     }
+    
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

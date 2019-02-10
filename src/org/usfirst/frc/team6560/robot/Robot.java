@@ -17,7 +17,7 @@ import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
 import org.usfirst.frc.team6560.robot.commands.AutonomousGroup;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6560.robot.subsystems.Elevator;
-import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
+import org.usfirst.frc.team6560.robot.subsystems.Grabber;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,8 +28,11 @@ import org.usfirst.frc.team6560.robot.subsystems.TestSensor;
  */
 public class Robot extends TimedRobot {
 	public static OI oi;
+	
 	public static DriveTrain driveTrain;
 	public static Elevator elevator;
+	public static Grabber grabber;
+	
 	public static NetworkTableInstance nt;
 
 	Command m_autonomousCommand;
@@ -43,6 +46,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		driveTrain = new DriveTrain();
 		elevator = new Elevator();
+		grabber = new Grabber();
 		oi = new OI();
 		nt = NetworkTableInstance.getDefault();
 		
