@@ -2,7 +2,7 @@ package org.usfirst.frc.team6560.robot.subsystems;
 
 import org.usfirst.frc.team6560.robot.Robot;
 import org.usfirst.frc.team6560.robot.RobotMap;
-import org.usfirst.frc.team6560.robot.commands.JoystickDrive;
+import org.usfirst.frc.team6560.robot.commands.ManualDrive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;

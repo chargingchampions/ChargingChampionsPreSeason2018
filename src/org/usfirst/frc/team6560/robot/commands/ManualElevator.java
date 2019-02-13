@@ -1,16 +1,17 @@
 package org.usfirst.frc.team6560.robot.commands;
 
 import org.usfirst.frc.team6560.robot.Robot;
+import org.usfirst.frc.team6560.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class JoystickElevator extends Command {
-	public static final double ELEVATOR_OUTPUT = 0.2;
+public class ManualElevator extends Command {
+	public static final double ELEVATOR_MAX_OUTPUT = 0.4;
 
-    public JoystickElevator() {
+    public ManualElevator() {
     	requires(Robot.elevator);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,10 +24,10 @@ public class JoystickElevator extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.oi.logitechJoystick.getPOV() == 0) {
-    		Robot.elevator.setElevatorOutput(ELEVATOR_OUTPUT);
-    	} else if (Robot.oi.logitechJoystick.getPOV() == 180) {
-    		Robot.elevator.setElevatorOutput(-ELEVATOR_OUTPUT);
+    	double y = Robot.oi.xbox.getRawAxis(RobotMap.Xbox.RIGHT_JOY_Y);
+    	
+    	if (Math.abs(y) > 0.1) {
+    		Robot.elevator.setElevatorOutput(y * ELEVATOR_MAX_OUTPUT);
     	} else {
     		Robot.elevator.setElevatorOutput(0);
     	}

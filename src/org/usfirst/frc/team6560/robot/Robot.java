@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-import org.usfirst.frc.team6560.robot.commands.AutoStraightDistance;
-import org.usfirst.frc.team6560.robot.commands.AutonomousGroup;
 import org.usfirst.frc.team6560.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6560.robot.subsystems.Elevator;
 import org.usfirst.frc.team6560.robot.subsystems.Grabber;
+import org.usfirst.frc.team6560.robot.subsystems.RearHatch;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain;
 	public static Elevator elevator;
 	public static Grabber grabber;
+	public static RearHatch rearHatch;
 	
 	public static NetworkTableInstance nt;
 
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrain();
 		elevator = new Elevator();
 		grabber = new Grabber();
+		rearHatch = new RearHatch();
 		oi = new OI();
 		nt = NetworkTableInstance.getDefault();
 		
@@ -80,8 +83,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = new AutonomousGroup();
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -124,8 +125,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		//System.out.println("R pos: " + driveTrain.getVelL());
-		//System.out.println("L pos: " + driveTrain.getVelR());
+		
 	}
 
 	/**
@@ -133,5 +133,18 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	
+	public static void initializeMotorManual(WPI_TalonSRX motor) {
+		initializeMotorManual(motor, 2);
+	}
+	
+	public static void initializeMotorManual(WPI_TalonSRX motor, double ramp) {
+		motor.config_kF(0, 0);
+		motor.config_kP(0, 0);
+		motor.config_kD(0, 0);
+		motor.config_kI(0, 0);
+	    	    
+		motor.configOpenloopRamp(ramp, 100);
 	}
 }

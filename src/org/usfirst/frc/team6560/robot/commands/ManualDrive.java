@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class JoystickDrive extends Command {
+public class ManualDrive extends Command {
 	public static final double TURN_SPEED = 0.5;
 	public static final double MAX_SPEED = 15;
 
-    public JoystickDrive() {
+    public ManualDrive() {
         requires(Robot.driveTrain);
         setInterruptible(true);
     }
@@ -27,10 +27,10 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	double x = -Robot.oi.logitechJoystick.getX();
-    	double y = Robot.oi.logitechJoystick.getY();
+    	double x = -Robot.oi.logitech.getX();
+    	double y = Robot.oi.logitech.getY();
     	
-    	double multiplier = (Robot.oi.logitechJoystick.getThrottle() + 1.0) / 2 * MAX_SPEED;
+    	double multiplier = (Robot.oi.logitech.getThrottle() + 1.0) / 2 * MAX_SPEED;
     	
         double radius = Math.sqrt(x*x + y*y);
         double t = Math.atan2(y, x);

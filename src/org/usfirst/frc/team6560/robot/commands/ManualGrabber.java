@@ -1,16 +1,18 @@
 package org.usfirst.frc.team6560.robot.commands;
 
 import org.usfirst.frc.team6560.robot.Robot;
+import org.usfirst.frc.team6560.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class JoystickGrabber extends Command {
-	public static final double FORK_OUTPUT = 0.2;
+public class ManualGrabber extends Command {
+	public static final double SWING_OUTPUT = 0.2;
+	public static final double BALL_OUTPUT = 0.2;
 
-    public JoystickGrabber() {
+    public ManualGrabber() {
     	requires(Robot.grabber);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -18,17 +20,27 @@ public class JoystickGrabber extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.grabber.setForkOutput(0);
+    	Robot.grabber.setSwingOutput(0);
+    	Robot.grabber.setBallOutput(0);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.oi.logitechJoystick.getPOV() == 90) {
-    		Robot.grabber.setForkOutput(FORK_OUTPUT);
-    	} else if (Robot.oi.logitechJoystick.getPOV() == 270) {
-    		Robot.grabber.setForkOutput(-FORK_OUTPUT);
+    	if (Robot.oi.logitech.getPOV() == 0) {
+    		Robot.grabber.setSwingOutput(SWING_OUTPUT);
+    	} else if (Robot.oi.logitech.getPOV() == 180) {
+    		Robot.grabber.setSwingOutput(-SWING_OUTPUT);
     	} else {
-    		Robot.grabber.setForkOutput(0);
+    		Robot.grabber.setSwingOutput(0);
+    	}
+    	
+    	if (Robot.oi.logitech.getRawButton(RobotMap.Logitech.TRIGGER)) {
+    		Robot.grabber.setBallOutput(BALL_OUTPUT);
+    	} else if (Robot.oi.logitech.getRawButton(RobotMap.Logitech.GRIP)){
+    		Robot.grabber.setBallOutput(-BALL_OUTPUT);
+    	} else {
+    		Robot.grabber.setBallOutput(0);
     	}
     }
 
@@ -39,7 +51,8 @@ public class JoystickGrabber extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.grabber.setForkOutput(0);
+    	Robot.grabber.setSwingOutput(0);
+    	Robot.grabber.setBallOutput(0);
     }
     
 
