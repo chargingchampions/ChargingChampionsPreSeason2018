@@ -14,8 +14,8 @@ public class RearHatch extends Subsystem {
 	private Solenoid shoot;
 	
 	public RearHatch() {
-		extend = new Solenoid(RobotMap.REAR_HATCH_EXTENSION_MOTOR);
-		shoot = new Solenoid(RobotMap.REAR_HATCH_SHOOTING_MOTOR);
+		extend = new Solenoid(RobotMap.REAR_HATCH_EXTENSION_SOLENOID);
+		shoot = new Solenoid(RobotMap.REAR_HATCH_SHOOTING_SOLENOID);
 		
 	}
 

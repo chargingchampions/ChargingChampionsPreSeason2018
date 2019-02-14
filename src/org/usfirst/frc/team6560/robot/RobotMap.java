@@ -15,15 +15,15 @@ public class RobotMap {
     public static final int L1_MOTOR = 9;
     public static final int L2_MOTOR = 8;
     
-    public static final int ELEVATOR_MOTOR = idk;
-    public static final int ELEVATOR_LIMIT_SWITCH_TOP = idk;
-    public static final int ELEVATOR_LIMIT_SWITCH_BOTTOM = idk;
+    public static final int ELEVATOR_MOTOR_LVL_1 = 5;
+    public static final int ELEVATOR_MOTOR_LVL_2 = 4;
     
-    public static final int GRABBER_BALL_MOTOR = idk;
-    public static final int GRABBER_SWINGING_MOTOR = idk;
+    public static final int GRABBER_BALL_MOTOR = 2;
+    public static final int GRABBER_SWINGING_MOTOR = 1;
+    public static final int FORK_MOTOR = 3;
     
-    public static final int REAR_HATCH_SHOOTING_MOTOR = idk;
-    public static final int REAR_HATCH_EXTENSION_MOTOR = idk;
+    public static final int REAR_HATCH_SHOOTING_SOLENOID = 2;
+    public static final int REAR_HATCH_EXTENSION_SOLENOID = 1;
         
 	public static class Logitech {
 		public static final int ID = 0;
@@ -40,8 +40,8 @@ public class RobotMap {
 	public static class Xbox {
 		public static final int ID = 1;
 		
-		public static final int LEFT_JOY_X = 1;
-		public static final int LEFT_JOY_Y = 2;
+		public static final int LEFT_JOY_X = 0;
+		public static final int LEFT_JOY_Y = 1;
 		
 		public static final int RIGHT_JOY_X = 4;
 		public static final int RIGHT_JOY_Y = 5;

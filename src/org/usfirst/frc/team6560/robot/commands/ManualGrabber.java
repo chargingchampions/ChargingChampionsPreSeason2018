@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ManualGrabber extends Command {
-	public static final double SWING_OUTPUT = 0.2;
-	public static final double BALL_OUTPUT = 0.2;
+	public static final double SWING_OUTPUT = 0.15;
+	public static final double BALL_OUTPUT = 0.15;
 
     public ManualGrabber() {
     	requires(Robot.grabber);
