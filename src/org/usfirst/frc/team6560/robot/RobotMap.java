@@ -9,11 +9,11 @@ package org.usfirst.frc.team6560.robot;
 public class RobotMap {
 
 	// drivetrain motors
-	public static final int R1_MOTOR = 0;
-    public static final int R2_MOTOR = 1;
+	public static final int R1_MOTOR = 8;
+    public static final int R2_MOTOR = 9;
     
-    public static final int L1_MOTOR = 9;
-    public static final int L2_MOTOR = 8;
+    public static final int L1_MOTOR = 7;
+    public static final int L2_MOTOR = 6;
     
     public static final int ELEVATOR_MOTOR_LVL_1 = 5;
     public static final int ELEVATOR_MOTOR_LVL_2 = 4;
@@ -23,7 +23,7 @@ public class RobotMap {
     public static final int FORK_MOTOR = 3;
     
     public static final int REAR_HATCH_SHOOTING_SOLENOID = 2;
-    public static final int REAR_HATCH_EXTENSION_SOLENOID = 1;
+    public static final int REAR_HATCH_EXTENSION_SOLENOID = 3;
         
 	public static class Logitech {
 		public static final int ID = 0;
