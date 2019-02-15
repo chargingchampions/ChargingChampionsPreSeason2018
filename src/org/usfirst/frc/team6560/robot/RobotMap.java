@@ -15,8 +15,14 @@ public class RobotMap {
     public static final int L1_MOTOR = 7;
     public static final int L2_MOTOR = 6;
     
-    public static final int ELEVATOR_MOTOR_LVL_1 = 5;
-    public static final int ELEVATOR_MOTOR_LVL_2 = 4;
+    public static final int ELEVATOR_LEVEL_1_MOTOR = 5;
+    public static final int ELEVATOR_LEVEL_1_LIMIT_SWITCH_TOP = idk;
+    public static final int ELEVATOR_LEVEL_1_LIMIT_SWITCH_BOTTOM = idk;
+
+    
+    public static final int ELEVATOR_LEVEL_2_MOTOR = 4;
+    public static final int ELEVATOR_LEVEL_2_LIMIT_SWITCH_TOP = idk;
+    public static final int ELEVATOR_LEVEL_2_LIMIT_SWITCH_BOTTOM = idk;
     
     public static final int GRABBER_BALL_MOTOR = 2;
     public static final int GRABBER_SWINGING_MOTOR = 1;

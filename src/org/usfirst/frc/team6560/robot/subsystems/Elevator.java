@@ -2,7 +2,8 @@ package org.usfirst.frc.team6560.robot.subsystems;
 
 import org.usfirst.frc.team6560.robot.Robot;
 import org.usfirst.frc.team6560.robot.RobotMap;
-import org.usfirst.frc.team6560.robot.commands.ManualElevator;
+import org.usfirst.frc.team6560.robot.commands.ManualElevatorLimitSwitch;
+import org.usfirst.frc.team6560.robot.util.ElevatorLevel;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -15,35 +16,48 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Elevator extends Subsystem {
-	private WPI_TalonSRX elevator1;
-	private WPI_TalonSRX elevator2;
+	private ElevatorLevel level1;
+	private ElevatorLevel level2;
+	
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public Elevator() {
-		elevator1 = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR_LVL_1);
-		Robot.initializeMotorManual(elevator1);
-		
-		elevator2 = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR_LVL_2);
-		Robot.initializeMotorManual(elevator2);
+		level1 = new ElevatorLevel(
+				RobotMap.ELEVATOR_LEVEL_1_MOTOR,
+				RobotMap.ELEVATOR_LEVEL_1_LIMIT_SWITCH_TOP,
+				RobotMap.ELEVATOR_LEVEL_1_LIMIT_SWITCH_BOTTOM);
+		level2 = new ElevatorLevel(
+				RobotMap.ELEVATOR_LEVEL_2_MOTOR,
+				RobotMap.ELEVATOR_LEVEL_2_LIMIT_SWITCH_TOP,
+				RobotMap.ELEVATOR_LEVEL_2_LIMIT_SWITCH_BOTTOM);
 	}
 	
 	public void periodic() {
-	
+		level1.update();
+		level2.update();
 	}
 
     public void initDefaultCommand() {
-        setDefaultCommand(new ManualElevator());
+        setDefaultCommand(new ManualElevatorLimitSwitch());
     }
     
-    public void setElevator1Output(double output) {
-    	elevator1.set(ControlMode.PercentOutput, output);
+    public ElevatorLevel getLevel1() {
+    	return level1;
     }
     
-    public void setElevator2Output(double output) {
-    	elevator2.set(ControlMode.PercentOutput, output);
+    public ElevatorLevel getLevel2() {
+    	return level2;
     }
     
-    private double requested;
+    public ElevatorLevel getLevel(int i) {
+    	if (i == 1) {
+    		return level1;
+    	} else if (i == 2) {
+    		return level2;
+    	} else {
+    		throw new RuntimeException("Invalid level");
+    	}
+    }
 }
 
