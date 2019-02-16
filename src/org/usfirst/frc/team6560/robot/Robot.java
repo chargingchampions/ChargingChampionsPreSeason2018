@@ -135,16 +135,4 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 	}
 	
-	public static void initializeMotorManual(WPI_TalonSRX motor) {
-		initializeMotorManual(motor, 2);
-	}
-	
-	public static void initializeMotorManual(WPI_TalonSRX motor, double ramp) {
-		motor.config_kF(0, 0);
-		motor.config_kP(0, 0);
-		motor.config_kD(0, 0);
-		motor.config_kI(0, 0);
-	    	    
-		motor.configOpenloopRamp(ramp, 100);
-	}
 }

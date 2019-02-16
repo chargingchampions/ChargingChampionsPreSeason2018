@@ -18,10 +18,8 @@ public class Grabber extends Subsystem {
 	
 	public Grabber() {
 		swing = new WPI_TalonSRX(RobotMap.GRABBER_SWINGING_MOTOR);
-		Robot.initializeMotorManual(swing);
 		
 		ball = new WPI_TalonSRX(RobotMap.GRABBER_BALL_MOTOR);
-		Robot.initializeMotorManual(ball);
 	}
 	
 	public void setSwingOutput(double output) {
